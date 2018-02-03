@@ -1,3 +1,3 @@
 # ft_printf
-print @42
+printf @42
 
