@@ -56,7 +56,7 @@ if (ft_printf_ENABLE_TEST)
   foreach (ft_printf_TEST_SRC ${ft_printf_TEST_SRCS})
     get_filename_component(ft_printf_TEST_NAME ${ft_printf_TEST_SRC} NAME_WE)
     set(test test_ft_printf_${ft_printf_TEST_NAME})
-    add_executable(${test} test/test.h ${ft_printf_TEST_SRC} test/lib/cli.c)
+    add_executable(${test} ${ft_printf_TEST_SRC})
     set_property(TARGET ${test}
       PROPERTY C_STANDARD 90)
     add_dependencies(${test} ft_printf)
