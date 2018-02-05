@@ -44,15 +44,20 @@ ssize_t	ft_dprintf(int fd, char const *fmt, ...)
 
 ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap)
 {
-	t_va_slist va;
+	t_ctx ctx;
 
-	va = (t_va_slist) {
+	ctx = (t_ctx) {
+		.va = (t_va_slist) {
+			.idx = 0,
+			.lock = 0
+		},
 		.idx = 0,
-		.lock = 0
+		.write = outn,
+		.write_data = &fd
 	};
-	va_copy(va.ap, ap);
-	eval_fmt(fd, fmt, &va, 0);
-	outflush(0);
+	va_copy(ctx.va.ap, ap);
+	eval_fmt((char *)fmt, ctx);
+	outflush(&ctx);
 	return (0);
 }
 

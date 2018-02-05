@@ -3,23 +3,23 @@
 
 # include "eval.h"
 
-typedef int	(t_pf)(t_fmt *fmt, t_va_slist *ap);
+typedef int	(t_pf)(t_fmt *fmt, t_ctx *ctx);
 
-int			fmt(t_fmt *fmt, t_va_slist *ap);
-int			fmts(t_fmt *fmt, t_va_slist *ap);
-int			fmtsu(t_fmt *fmt, t_va_slist *ap);
-int			fmtp(t_fmt *fmt, t_va_slist *ap);
-int			fmtd(t_fmt *fmt, t_va_slist *ap);
-int			fmtdu(t_fmt *fmt, t_va_slist *ap);
-int			fmti(t_fmt *fmt, t_va_slist *ap);
-int			fmto(t_fmt *fmt, t_va_slist *ap);
-int			fmtou(t_fmt *fmt, t_va_slist *ap);
-int			fmtu(t_fmt *fmt, t_va_slist *ap);
-int			fmtuu(t_fmt *fmt, t_va_slist *ap);
-int			fmtx(t_fmt *fmt, t_va_slist *ap);
-int			fmtxu(t_fmt *fmt, t_va_slist *ap);
-int			fmtc(t_fmt *fmt, t_va_slist *ap);
-int			fmtcu(t_fmt *fmt, t_va_slist *ap);
+int			fmt(t_fmt *fmt, t_ctx *ctx);
+int			fmts(t_fmt *fmt, t_ctx *ctx);
+int			fmtsu(t_fmt *fmt, t_ctx *ctx);
+int			fmtp(t_fmt *fmt, t_ctx *ctx);
+int			fmtd(t_fmt *fmt, t_ctx *ctx);
+int			fmtdu(t_fmt *fmt, t_ctx *ctx);
+int			fmti(t_fmt *fmt, t_ctx *ctx);
+int			fmto(t_fmt *fmt, t_ctx *ctx);
+int			fmtou(t_fmt *fmt, t_ctx *ctx);
+int			fmtu(t_fmt *fmt, t_ctx *ctx);
+int			fmtuu(t_fmt *fmt, t_ctx *ctx);
+int			fmtx(t_fmt *fmt, t_ctx *ctx);
+int			fmtxu(t_fmt *fmt, t_ctx *ctx);
+int			fmtc(t_fmt *fmt, t_ctx *ctx);
+int			fmtcu(t_fmt *fmt, t_ctx *ctx);
 
 #define TIDX(i) ((i) - '%')
 

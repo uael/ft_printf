@@ -19,6 +19,14 @@ typedef struct	s_fmt
 	struct s_fmt	*next;
 }				t_fmt;
 
-void eval_fmt(int fd, char const *fmt, t_va_slist *va, uint32_t	idx);
+typedef struct  s_ctx
+{
+	t_va_slist		va;
+	uint32_t		idx;
+	void 			(*write)(struct s_ctx *ctx, char *s, size_t n);
+	void			*write_data;
+}				t_ctx;
+
+void 			eval_fmt(char *fmt, t_ctx ctx);
 
 #endif
