@@ -5,8 +5,10 @@
 # include <sys/types.h>
 
 typedef struct {
-	ssize_t	nb;
-	int		fd;
+	ssize_t		nb;
+	int			fd;
+	char 		buf[4096];
+	uint16_t	idx;
 } out_wdata;
 
 void outflush(t_ctx *ctx);

@@ -2,27 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char	g_buf[4096];
-static unsigned short g_idx = 0;
-
-void bufferflush(t_ctx *ctx) {
+void bufferflush(t_ctx *ctx)
+{
 	buffer_wdata *data;
 
 	data = ((buffer_wdata *)ctx->write_data);
 	if (data->buffer)
-		data->buffer = realloc(data->buffer, sizeof(char) * (data->len + g_idx));
+		data->buffer = realloc(data->buffer, sizeof(char) * (data->len + data->idx));
 	else
-		data->buffer = malloc(sizeof(char) * g_idx);
-	data->len = data->len + g_idx;
-	memcpy(data->buffer + data->len - g_idx, g_buf, g_idx);
-	g_idx = 0;
+		data->buffer = malloc(sizeof(char) * data->idx);
+	memcpy(data->buffer + data->len, data->buf, data->idx);
+	data->len = data->len + data->idx;
+	data->idx = 0;
 } 
 
 void bufferc(t_ctx *ctx, char c)
 {
-	if (g_idx + 1 == 4096)
+	buffer_wdata *data;
+
+	data = ((buffer_wdata *)ctx->write_data);
+
+	if (data->idx + 1 == 4096)
 		bufferflush(ctx);
-	g_buf[g_idx++] = c;
+	data->buf[data->idx++] = c;
 }
 
 void buffern(t_ctx *ctx, char *s, size_t n)

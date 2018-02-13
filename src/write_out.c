@@ -1,19 +1,23 @@
 #include "write_out.h"
 #include <unistd.h>
 
-static char	g_buf[4096];
-static unsigned short g_idx = 0;
+void outflush(t_ctx *ctx)
+{
+	out_wdata *data;
 
-void outflush(t_ctx *ctx) {
-	write(((out_wdata *)ctx->write_data)->fd, g_buf, g_idx);
-	g_idx = 0;
+	data = (out_wdata *)ctx->write_data;
+	write(data->fd, data->buf, data->idx);
+	data->idx = 0;
 } 
 
 void outc(t_ctx *ctx, char c)
 {
-	if (g_idx + 1 == 4096)
+	out_wdata *data;
+
+	data = (out_wdata *)ctx->write_data;
+	if (data->idx + 1 == 4096)
 		outflush(ctx);
-	g_buf[g_idx++] = c;
+	data->buf[data->idx++] = c;
 }
 
 void outn(t_ctx *ctx, char *s, size_t n)

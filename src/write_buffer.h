@@ -5,9 +5,11 @@
 # include <sys/types.h>
 
 typedef struct {
-	ssize_t	nb;
-	char	*buffer;
-	size_t	len;
+	ssize_t		nb;
+	char		*buffer;
+	size_t		len;
+	char 		buf[4096];
+	uint16_t	idx;
 } buffer_wdata;
 
 void bufferflush(t_ctx *ctx);

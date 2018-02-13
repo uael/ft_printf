@@ -50,9 +50,9 @@ ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap)
 
 	data = (out_wdata) {
 		.fd = fd,
-		.nb = 0
+		.nb = 0,
+		.idx = 0
 	};
-
 	ctx = (t_ctx) {
 		.va = (t_va_slist) {
 			.idx = 0,
@@ -88,9 +88,9 @@ ssize_t	ft_vasnprintf(char **out, char const *fmt, va_list ap)
 	data = (buffer_wdata) {
 		.buffer = NULL,
 		.nb = 0,
-		.len = 0
+		.len = 0,
+		.idx = 0
 	};
-
 	ctx = (t_ctx) {
 		.va = (t_va_slist) {
 			.idx = 0,
