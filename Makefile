@@ -33,7 +33,7 @@ LIB_NAME = $(LIBS)
 endif
 3TH_NAME =
 SRC_NAME = \
-	arg.c eval.c fmt.c parse.c printf.c write.c
+	arg.c eval.c fmt.c parse.c printf.c write_out.c write_buffer.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))

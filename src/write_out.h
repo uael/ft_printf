@@ -1,5 +1,5 @@
-#ifndef FT_PRINTF_WRITE_H
-# define FT_PRINTF_WRITE_H
+#ifndef FT_PRINTF_WRITE_OUT_H
+# define FT_PRINTF_WRITE_OUT_H
 
 # include "eval.h"
 # include <sys/types.h>

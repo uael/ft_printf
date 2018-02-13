@@ -12,7 +12,8 @@
 
 #include "ft_printf.h"
 #include "eval.h"
-#include "write.h"
+#include "write_out.h"
+#include "write_buffer.h"
 #include <unistd.h>
 
 ssize_t	ft_printf(char const *fmt, ...)
@@ -70,15 +71,40 @@ ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap)
 
 ssize_t	ft_asnprintf(char **out, char const *fmt, ...)
 {
-	(void)out;
-	(void)fmt;
-	return (0);
+	va_list	ap;
+	ssize_t	r;
+
+	va_start(ap, fmt);
+	r = ft_vasnprintf(out, fmt, ap);
+	va_end(ap);
+	return (r);
 }
 
 ssize_t	ft_vasnprintf(char **out, char const *fmt, va_list ap)
 {
-	(void)out;
-	(void)fmt;
-	(void)ap;
-	return (0);
+	t_ctx ctx;
+	buffer_wdata data;
+
+	data = (buffer_wdata) {
+		.buffer = NULL,
+		.nb = 0,
+		.len = 0
+	};
+
+	ctx = (t_ctx) {
+		.va = (t_va_slist) {
+			.idx = 0,
+			.lock = 0
+		},
+		.idx = 0,
+		.write = buffern,
+		.writer = bufferr,
+		.write_data = &data
+	};
+	va_copy(ctx.va.ap, ap);
+	eval_fmt((char *)fmt, &ctx);
+	bufferr(&ctx, 0, 1);
+	bufferflush(&ctx);
+	*out = data.buffer;
+	return (data.nb);
 }
