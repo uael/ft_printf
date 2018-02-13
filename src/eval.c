@@ -27,13 +27,16 @@ static void re_eval_fmt(t_farg *arg, t_fmt	*f, t_ctx *ctx)
 	}
 }
 
-static int exec(t_parse res, t_fmt *f, t_farg *arg_begin, t_ctx *ctx)
+static int exec(t_parse *res, t_fmt *f, t_farg *arg_begin, t_ctx *ctx)
 {
 	t_pf		*fn;
 
-	f->param = arg_at_index(arg_begin, res.param);
-	f->precisionarg = res.precision != -1 ? arg_at_index(arg_begin, res.precision) : NULL;
-	f->widtharg = res.width != -1 ? arg_at_index(arg_begin, res.width) : NULL;
+	if (!f->param)
+		f->param = arg_at_index(arg_begin, res->param);
+	if (!f->precisionarg)
+		f->precisionarg = res->precision != -1 ? arg_at_index(arg_begin, res->precision) : NULL;
+	if (!f->widtharg)
+		f->widtharg = res->width != -1 ? arg_at_index(arg_begin, res->width) : NULL;
 	fn = g_pf[TIDX(f->end[-1])];
 	if (fn)
 		return (fn(f, ctx));
@@ -41,7 +44,7 @@ static int exec(t_parse res, t_fmt *f, t_farg *arg_begin, t_ctx *ctx)
 		return (0);
 }
 
-inline static void next_arg(t_farg **arg, t_farg *next)
+inline static void next_arg(t_farg **arg, t_farg *next, t_fmt *fmt, t_parse *res)
 {
 	(*arg)->next = next;
 	*next = (t_farg) {
@@ -49,6 +52,12 @@ inline static void next_arg(t_farg **arg, t_farg *next)
 		.type = NONE,
 		.next = NULL
 	};
+	if (next->idx == res->param)
+		fmt->param = next;
+	if (next->idx == res->precision)
+		fmt->precisionarg = next;
+	if (next->idx == res->width)
+		fmt->widtharg = next;
 	*arg = next;
 }
 
@@ -58,8 +67,13 @@ inline static void next_fmt(t_fmt **begin, t_fmt **f, t_fmt *next)
 		(*f)->next = next;
 	else
 		*begin = next;
+	*next = (t_fmt){
+		.next = NULL,
+		.param = NULL,
+		.precisionarg = NULL,
+		.widtharg = NULL
+	};
 	*f = next;
-	(*f)->next = NULL;
 }
 
 void eval_fmt(char *fmt, t_ctx ctx) {
@@ -82,8 +96,8 @@ void eval_fmt(char *fmt, t_ctx ctx) {
 		res = parse(&c, f, &ctx.idx);
 		res.max -= arg->idx;
 		while (res.max-- > 0)
-			next_arg(&arg, alloca(sizeof(t_farg)));
-		if (exec(res, f, &arg_b, &ctx) == -1 && !ctx.va.lock && (f_b = f))
+			next_arg(&arg, alloca(sizeof(t_farg)), f, &res);
+		if (exec(&res, f, &arg_b, &ctx) == -1 && !ctx.va.lock && (f_b = f))
 			ctx.va.lock = 1;
 	}
 	if (ctx.va.lock)
