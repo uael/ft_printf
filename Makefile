@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME ?= ft_printf
+NAME ?= ftprintf
 CFLAGS += -Werror -Wextra -Wall
 RCFLAGS = -O2 -fomit-frame-pointer
 DCFLAGS = -g3 -DDEBUG

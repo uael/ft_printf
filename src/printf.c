@@ -53,10 +53,11 @@ ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap)
 		},
 		.idx = 0,
 		.write = outn,
+		.writer = outr,
 		.write_data = &fd
 	};
 	va_copy(ctx.va.ap, ap);
-	eval_fmt((char *)fmt, ctx);
+	eval_fmt((char *)fmt, &ctx);
 	outflush(&ctx);
 	return (0);
 }

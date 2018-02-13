@@ -1,15 +1,27 @@
 #include "fmt.h"
+#include "parse.h"
 #include <string.h>
 
 int	fmt(t_fmt *fmt, t_ctx *ctx)
 {
+	ctx->writer(ctx, '%', 1);
 	return (0);
 }
 
 int	fmts(t_fmt *fmt, t_ctx *ctx)
 {
+	size_t len;
+
 	TRY(get_arg(fmt->param, PTR, &ctx->va));
-	ctx->write(ctx, fmt->param->value.p, strlen(fmt->param->value.p));
+	len = fmt->param->value.p ? strlen(fmt->param->value.p) : 6;
+	if (!(fmt->flags & PF_MINUS) && len < fmt->width)
+		ctx->writer(ctx, ' ', fmt->width - len);
+	if (fmt->param->value.p)
+		ctx->write(ctx, fmt->param->value.p, len);
+	else
+		ctx->write(ctx, "(null)", 6);
+	if (fmt->flags & PF_MINUS && len < fmt->width)
+		ctx->writer(ctx, ' ', fmt->width - len);
 	return (0);
 }
 

@@ -33,10 +33,15 @@ static int exec(t_parse *res, t_fmt *f, t_farg *arg_begin, t_ctx *ctx)
 
 	if (!f->param)
 		f->param = arg_at_index(arg_begin, res->param);
-	if (!f->precisionarg)
-		f->precisionarg = res->precision != -1 ? arg_at_index(arg_begin, res->precision) : NULL;
-	if (!f->widtharg)
-		f->widtharg = res->width != -1 ? arg_at_index(arg_begin, res->width) : NULL;
+	if (!f->precisionarg && res->precision != -1)
+		f->precisionarg = arg_at_index(arg_begin, res->precision);
+	if (!f->widtharg && res->width != -1)
+		f->widtharg = arg_at_index(arg_begin, res->width);
+	if (TIDX(f->end[-1]) < 0 || TIDX(f->end[-1]) > sizeof(g_pf)/sizeof(*g_pf))
+	{
+		ctx->write(ctx, f->begin - 1, f->end - f->begin + 1);
+		return (0);
+	}
 	fn = g_pf[TIDX(f->end[-1])];
 	if (fn)
 		return (fn(f, ctx));
@@ -76,7 +81,7 @@ inline static void next_fmt(t_fmt **begin, t_fmt **f, t_fmt *next)
 	*f = next;
 }
 
-void eval_fmt(char *fmt, t_ctx ctx) {
+void eval_fmt(char *fmt, t_ctx *ctx) {
 	char		*c;
 	t_fmt		*f;
 	t_fmt		*f_b;
@@ -90,16 +95,17 @@ void eval_fmt(char *fmt, t_ctx ctx) {
 	arg_b = (t_farg) { .idx = 0, .type = NONE };
 	while ((c = strchr(c, '%')))
 	{
-		if (!ctx.va.lock)
-			ctx.write(&ctx, f_b ? f->end : fmt, c - (f_b ? f->end : fmt));
+		if (!ctx->va.lock)
+			ctx->write(ctx, f_b ? f->end : fmt, c - (f_b ? f->end : fmt));
 		next_fmt(&f_b, &f, alloca(sizeof(t_fmt)));
-		res = parse(&c, f, &ctx.idx);
+		res = parse(&c, f, &ctx->idx);
 		res.max -= arg->idx;
 		while (res.max-- > 0)
 			next_arg(&arg, alloca(sizeof(t_farg)), f, &res);
-		if (exec(&res, f, &arg_b, &ctx) == -1 && !ctx.va.lock && (f_b = f))
-			ctx.va.lock = 1;
+		if (exec(&res, f, &arg_b, ctx) == -1 && !ctx->va.lock && (f_b = f))
+			ctx->va.lock = 1;
 	}
-	if (ctx.va.lock)
-		re_eval_fmt(&arg_b, f_b, &ctx);
+	if (ctx->va.lock)
+		re_eval_fmt(&arg_b, f_b, ctx);
+	ctx->write(ctx, f_b ? f->end : fmt, strlen(f_b ? f->end : fmt));
 }

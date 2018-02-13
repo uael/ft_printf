@@ -1,14 +1,13 @@
 #include "parse.h"
 #include <ctype.h>
 
-uint32_t	atoio(char **it)
+static uint32_t	atoio(char **it)
 {
-	int32_t i;
-
+	int64_t i;
 	i = 0;
 	while (isdigit(**it) && i >= 0)
 		i = i * 10 + *(*it)++ - '0';
-	if (i < 0)
+	if (i < 0 || i > UINT32_MAX)
 	{
 		while (isdigit(**it))
 			++*it;
@@ -34,8 +33,8 @@ t_parse parse(char **it, t_fmt *f, uint32_t *idx)
 	res.width = parse_width(it, f, idx);
 	res.precision = parse_precision(it, f, idx);
 	f->length = parse_length(it);
-	f->end = *it + 1;
-	if (res.param == -1)
+	f->end = ++(*it);
+	if (res.param == -1 && f->end[-1] != '%')
 		res.param = (*idx)++;
 	res.max = MAX(MAX(MAX(res.param, res.width), res.precision), 0);
 	return (res);
@@ -60,11 +59,8 @@ int32_t	parse_width(char **it, t_fmt *fmt, uint32_t *idx)
 {
 	fmt->width = 0;
 	if (**it == '*')
-	{
-		fmt->width = -1;
 		return isdigit(*++*it) ? atoio(it) - 1 : (*idx)++;
-	}
-	else if (isdigit(**it))
+	else if (isdigit(**it) || **it == '-')
 		fmt->width = atoio(it);
 	return (-1);
 }

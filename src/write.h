@@ -6,5 +6,6 @@
 
 void outflush(t_ctx *ctx);
 void outn(t_ctx *ctx, char *s, size_t n);
+void outr(t_ctx *ctx, char s, size_t n);
 
 #endif

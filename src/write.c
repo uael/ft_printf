@@ -18,6 +18,14 @@ void outc(t_ctx *ctx, char c)
 
 void outn(t_ctx *ctx, char *s, size_t n)
 {
-	while (n--)
-		outc(ctx, *s++);
+	if (n > 0)
+		while (n--)
+			outc(ctx, *s++);
+}
+
+void outr(t_ctx *ctx, char s, size_t n)
+{
+	if (n > 0)
+		while (n--)
+			outc(ctx, s);
 }

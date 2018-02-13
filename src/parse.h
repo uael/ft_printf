@@ -53,7 +53,6 @@ typedef struct	s_parse {
 	int32_t max;
 }				t_parse;
 
-uint32_t	atoio(char **it);
 t_parse 	parse(char **it, t_fmt *f, uint32_t *idx);
 uint8_t 	parse_flags(char **it);
 int32_t		parse_width(char **it, t_fmt *fmt, uint32_t *idx);
