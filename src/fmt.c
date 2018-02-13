@@ -27,7 +27,7 @@ int	fmts(t_fmt *fmt, t_ctx *ctx)
 
 int	fmtsu(t_fmt *fmt, t_ctx *ctx)
 {
-	return (0);
+	return (fmts(fmt, ctx));
 }
 
 int	fmtp(t_fmt *fmt, t_ctx *ctx)
