@@ -93,10 +93,10 @@ test: all
 	./test.sh $(NAME)
 
 testdev: dev
-	./test.sh $(NAME).dev
+	./test.sh $(NAME).dev $(DCFLAGS)
 
 testsan: san
-	./test.sh $(NAME).san
+	SAN=1 IMPL="san_asnprintf" CC=clang ./test.sh $(NAME).san "$(SCFLAGS)"
 
 -include $(DEP)
 

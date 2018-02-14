@@ -33,7 +33,7 @@ t_parse parse(char **it, t_fmt *f, uint32_t *idx)
 	res.width = parse_width(it, f, idx);
 	res.precision = parse_precision(it, f, idx);
 	f->length = parse_length(it);
-	f->end = ++(*it);
+	f->end = **it ? ++(*it) : *it;
 	if (res.param == -1 && f->end[-1] != '%')
 		res.param = (*idx)++;
 	res.max = MAX(MAX(MAX(res.param, res.width), res.precision), 0);

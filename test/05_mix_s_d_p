@@ -1,2 +1,0 @@
-simple: "s: %s, p: %p, d:%d", "a string", &malloc, 42
-super: "%s%p%d%d%p%s%p%p%s","a", &free, 1, 2, &malloc, "b", &free, &malloc, "c"
