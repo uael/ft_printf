@@ -1,0 +1,2 @@
+simple: "%p", &strlen
+null: "%p, NULL

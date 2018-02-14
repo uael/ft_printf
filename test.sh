@@ -64,9 +64,9 @@ function exec_printf {
 		echo -e "$OK"
 	else
 		echo -e "$ERROR"
-		local ft_printf_return=${ft_printf_raw%\:*}
+		local ft_printf_return=${ft_printf_raw%%\:*}
 		local ft_printf_out=${ft_printf_raw#*\:}
-		local printf_return=${printf_raw%\:*}
+		local printf_return=${printf_raw%%\:*}
 		local printf_out=${printf_raw#*\:}
 
 		echo -e "====$PURPLE ftprintf $RESET===="
@@ -82,7 +82,7 @@ function exec_printf {
 function exec_tests {
 	local impl=$1
 
-	for test in test/*; do 
+	for test in test/*; do
 		while read p; do
 			IFS=':' read -r name format <<< "$p"
 			exec_printf "$impl" "$(basename $test): $name" "$format"

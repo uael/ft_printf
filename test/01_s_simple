@@ -1,6 +1,0 @@
-simple: "%s", "abc"
-simple2: "111%s333", "222"
-simple3: "%s333", "222"
-simple4: "111%s", "222"
-null: "{%s}", 0
-empty: "{%s}", ""
