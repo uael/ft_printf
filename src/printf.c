@@ -69,18 +69,18 @@ ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap)
 	return (data.nb);
 }
 
-ssize_t	ft_asnprintf(char **out, char const *fmt, ...)
+ssize_t	ft_asprintf(char **out, char const *fmt, ...)
 {
 	va_list	ap;
 	ssize_t	r;
 
 	va_start(ap, fmt);
-	r = ft_vasnprintf(out, fmt, ap);
+	r = ft_vasprintf(out, fmt, ap);
 	va_end(ap);
 	return (r);
 }
 
-ssize_t	ft_vasnprintf(char **out, char const *fmt, va_list ap)
+ssize_t	ft_vasprintf(char **out, char const *fmt, va_list ap)
 {
 	t_ctx ctx;
 	buffer_wdata data;
@@ -106,5 +106,5 @@ ssize_t	ft_vasnprintf(char **out, char const *fmt, va_list ap)
 	bufferr(&ctx, 0, 1);
 	bufferflush(&ctx);
 	*out = data.buffer;
-	return (data.nb);
+	return (data.nb - 1);
 }

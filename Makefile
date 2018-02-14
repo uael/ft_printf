@@ -89,6 +89,15 @@ endif
 
 re: clean all
 
+test: all
+	./test.sh $(NAME)
+
+testdev: dev
+	./test.sh $(NAME).dev
+
+testsan: san
+	./test.sh $(NAME).san
+
 -include $(DEP)
 
 ifndef VERBOSE

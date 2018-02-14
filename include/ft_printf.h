@@ -20,7 +20,7 @@ ssize_t	ft_printf(char const *fmt, ...);
 ssize_t	ft_vprintf(char const *fmt, va_list ap);
 ssize_t	ft_dprintf(int fd, char const *fmt, ...);
 ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap);
-ssize_t	ft_asnprintf(char **out, char const *fmt, ...);
-ssize_t	ft_vasnprintf(char **out, char const *fmt, va_list ap);
+ssize_t	ft_asprintf(char **out, char const *fmt, ...);
+ssize_t	ft_vasprintf(char **out, char const *fmt, va_list ap);
 
 #endif
