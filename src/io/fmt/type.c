@@ -82,7 +82,7 @@ static inline void	poparg2(t_varg *arg, int type, va_list *ap)
 	else if (type == T_UMAX)
 		arg->u = va_arg(*ap, uintmax_t);
 	else if (type == T_PDIFF)
-		arg->i = va_arg(*ap, ptrdiff_t);
+		arg->i = va_arg(*ap, ssize_t);
 	else if (type == T_DBL)
 		arg->f = va_arg(*ap, double);
 	else if (type == T_LDBL)
