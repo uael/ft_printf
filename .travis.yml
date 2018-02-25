@@ -4,4 +4,3 @@ dist: trusty
 os: osx
 script:
   - make test
-  - make testsan
