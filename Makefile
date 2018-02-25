@@ -133,7 +133,7 @@ endif
 re: clean all
 
 test: all
-	./test.sh $(NAME)
+	./test.sh $(PROJECT)
 
 -include $(DEP)
 
