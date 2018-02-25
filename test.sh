@@ -31,7 +31,7 @@ function san_asnprintf {
 #include <sys/types.h>
 #include <unistd.h>
 #include <limits.h>
-#include "ft_printf.h"
+#include "libft/io.h"
 
 int main() {
 	char *ft_printf_out;
@@ -57,7 +57,7 @@ function asnprintf {
 #include <sys/types.h>
 #include <unistd.h>
 #include <limits.h>
-#include "ft_printf.h"
+#include "libft/io.h"
 
 int main() {
 	char *ft_printf_out;
