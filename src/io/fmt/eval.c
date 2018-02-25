@@ -18,14 +18,15 @@
 #include "internal.h"
 
 static t_fmtcb	*g_fmts[] = {
-	['s' - 'A'] = iofmt_fmts
+	['%' - '%'] = iofmt_fmtpct,
+	['s' - '%'] = iofmt_fmts
 };
 
 static int		evalt(int t, t_fmt *f, t_varg arg, char *buf)
 {
 	t_fmtcb *cb;
 
-	if ((cb = g_fmts[t - 'A']))
+	if ((cb = g_fmts[t - '%']))
 		return (cb(t, f, arg, buf));
 	errno = EINVAL;
 	return (-1);

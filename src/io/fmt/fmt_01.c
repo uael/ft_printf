@@ -32,3 +32,20 @@ int		iofmt_fmts(int t, t_fmt *f, t_varg arg, char *buf)
 	f->f &= ~ZERO_PAD;
 	return (0);
 }
+
+int		iofmt_fmtpct(int t, t_fmt *f, t_varg arg, char *buf)
+{
+	(void)t;
+	(void)buf;
+	(void)arg;
+	f->beg = "%";
+	f->end = f->beg + strnlen(f->beg, (size_t)(f->p < 0 ? INT_MAX : f->p));
+	if (f->p < 0 && *f->end)
+	{
+		errno = EOVERFLOW;
+		return (-1);
+	}
+	f->p = (int32_t)(f->end - f->beg);
+	f->f &= ~ZERO_PAD;
+	return (0);
+}

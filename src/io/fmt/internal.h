@@ -30,6 +30,7 @@ enum {
 
 typedef int		(t_fmtcb)(int t, t_fmt *f, t_varg arg, char *buf);
 
+extern int		iofmt_fmtpct(int t, t_fmt *f, t_varg arg, char *buf);
 extern int		iofmt_fmts(int t, t_fmt *f, t_varg arg, char *buf);
 
 #endif

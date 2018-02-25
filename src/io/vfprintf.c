@@ -49,18 +49,6 @@ static int		doerr(int err)
 	return (-1);
 }
 
-static int		skipdpct(char **sp)
-{
-	while (*(*sp + 1) == '%')
-		if (*(*sp += 2) != '%')
-		{
-			if (!(*sp = strchr(*sp, '%')))
-				return (0);
-			break ;
-		}
-	return (1);
-}
-
 inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 {
 	t_fmt	fm;
@@ -70,7 +58,7 @@ inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	char	*pct;
 
 	ret = 0;
-	while ((pct = strchr(fmt, '%')) && skipdpct(&pct))
+	while ((pct = strchr(fmt, '%')))
 	{
 		if ((ret += iofmt_out(f, fmt, pct++ - fmt)) > INT_MAX ||
 			iofmt_parse(&fm, &pct))

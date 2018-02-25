@@ -12,12 +12,12 @@
 
 #include "internal.h"
 
-#define S(x) [(x)-'A']
-#define OOB(x) ((unsigned)(x)-'A' > 'z'-'A')
+#define S(x) [(x)-'%']
+#define OOB(x) ((x)!='%'&&((unsigned)(x)-'A' > 'z'-'A'))
 
-static uint8_t const g_states[]['z'-'A'+1] = {
+static uint8_t const g_states[]['z'-'%'+1] = {
 	{
-		S('d') = T_INT, S('i') = T_INT,
+		S('%') = T_NOARG, S('d') = T_INT, S('i') = T_INT,
 		S('o') = T_UINT, S('u') = T_UINT, S('x') = T_UINT, S('X') = T_UINT,
 		S('e') = T_DBL, S('f') = T_DBL, S('g') = T_DBL, S('a') = T_DBL,
 		S('E') = T_DBL, S('F') = T_DBL, S('G') = T_DBL, S('A') = T_DBL,
@@ -28,7 +28,7 @@ static uint8_t const g_states[]['z'-'A'+1] = {
 		S('z') = T_ZTPRE, S('j') = T_JPRE, S('t') = T_ZTPRE,
 	},
 	{
-		S('d') = T_LONG, S('i') = T_LONG,
+		S('%') = T_NOARG, S('d') = T_LONG, S('i') = T_LONG,
 		S('o') = T_ULONG, S('u') = T_ULONG, S('x') = T_ULONG, S('X') = T_ULONG,
 		S('e') = T_DBL, S('f') = T_DBL, S('g') = T_DBL, S('a') = T_DBL,
 		S('E') = T_DBL, S('F') = T_DBL, S('G') = T_DBL, S('A') = T_DBL,
@@ -36,37 +36,38 @@ static uint8_t const g_states[]['z'-'A'+1] = {
 		S('l') = T_LLPRE,
 	},
 	{
-		S('d') = T_LLONG, S('i') = T_LLONG,
+		S('%') = T_NOARG, S('d') = T_LLONG, S('i') = T_LLONG,
 		S('o') = T_ULLONG, S('u') = T_ULLONG,
 		S('x') = T_ULLONG, S('X') = T_ULLONG,
 		S('n') = T_PTR,
 	},
 	{
-		S('d') = T_SHORT, S('i') = T_SHORT,
+		S('%') = T_NOARG, S('d') = T_SHORT, S('i') = T_SHORT,
 		S('o') = T_USHORT, S('u') = T_USHORT,
 		S('x') = T_USHORT, S('X') = T_USHORT,
 		S('n') = T_PTR,
 		S('h') = T_HHPRE,
 	},
 	{
-		S('d') = T_CHAR, S('i') = T_CHAR,
+		S('%') = T_NOARG, S('d') = T_CHAR, S('i') = T_CHAR,
 		S('o') = T_UCHAR, S('u') = T_UCHAR,
 		S('x') = T_UCHAR, S('X') = T_UCHAR,
 		S('n') = T_PTR,
 	},
 	{
-		S('e') = T_LDBL, S('f') = T_LDBL, S('g') = T_LDBL, S('a') = T_LDBL,
+		S('%') = T_NOARG, S('e') = T_LDBL, S('f') = T_LDBL, S('g') = T_LDBL,
+		S('a') = T_LDBL,
 		S('E') = T_LDBL, S('F') = T_LDBL, S('G') = T_LDBL, S('A') = T_LDBL,
 		S('n') = T_PTR,
 	},
 	{
-		S('d') = T_PDIFF, S('i') = T_PDIFF,
+		S('%') = T_NOARG, S('d') = T_PDIFF, S('i') = T_PDIFF,
 		S('o') = T_SIZET, S('u') = T_SIZET,
 		S('x') = T_SIZET, S('X') = T_SIZET,
 		S('n') = T_PTR,
 	},
 	{
-		S('d') = T_IMAX, S('i') = T_IMAX,
+		S('%') = T_NOARG, S('d') = T_IMAX, S('i') = T_IMAX,
 		S('o') = T_UMAX, S('u') = T_UMAX,
 		S('x') = T_UMAX, S('X') = T_UMAX,
 		S('n') = T_PTR,
