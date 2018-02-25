@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   vsprintf.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
+
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int ft_vsprintf(char *s, const char *fmt, va_list ap)
 {
-	int		ret;
-	va_list	ap;
-
-	va_start(ap, fmt);
-	ret = ft_vfprintf(g_stdout, fmt, ap);
-	va_end(ap);
-	return (ret);
+	return (ft_vsnprintf(s, INT_MAX, fmt, ap));
 }

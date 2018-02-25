@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   vsnprintf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef VSNPRINTF_H
+# define VSNPRINTF_H
 
-int	ft_printf(const char *fmt, ...)
+# include "ft_printf.h"
+
+typedef struct	s_cookie
 {
-	int		ret;
-	va_list	ap;
+	char		*s;
+	size_t		n;
+}				t_cookie;
 
-	va_start(ap, fmt);
-	ret = ft_vfprintf(g_stdout, fmt, ap);
-	va_end(ap);
-	return (ret);
-}
+#endif

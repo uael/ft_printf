@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   vdprintf.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <sys/uio.h>
+
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+static size_t	dwrite(t_stream *f, uint8_t const *buf, size_t len)
 {
-	int		ret;
-	va_list	ap;
+	(void)f;
+	(void)buf;
+	(void)len;
+	return (0);
+}
 
-	va_start(ap, fmt);
-	ret = ft_vfprintf(g_stdout, fmt, ap);
-	va_end(ap);
-	return (ret);
+int				ft_vdprintf(int fd, const char *fmt, va_list ap)
+{
+	t_stream f;
+
+	f = (t_stream){
+		.fd = fd,
+		.lbf = EOF,
+		.write = dwrite,
+		.buf = (void *)fmt,
+		.buf_size = 0,
+		.lock = -1
+	};
+	return (ft_vfprintf(&f, fmt, ap));
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   asprintf.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int	ft_asprintf(char **s, const char *fmt, ...)
 {
 	int		ret;
 	va_list	ap;
 
 	va_start(ap, fmt);
-	ret = ft_vfprintf(g_stdout, fmt, ap);
+	ret = ft_vasprintf(s, fmt, ap);
 	va_end(ap);
 	return (ret);
 }

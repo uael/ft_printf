@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   vprintf.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,13 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int	ft_vprintf(const char *fmt, va_list ap)
 {
-	int		ret;
-	va_list	ap;
-
-	va_start(ap, fmt);
-	ret = ft_vfprintf(g_stdout, fmt, ap);
-	va_end(ap);
-	return (ret);
+	return (ft_vfprintf(g_stdout, fmt, ap));
 }
