@@ -73,51 +73,51 @@ static uint8_t const g_states[]['z'-'A'+1] = {
 	}
 };
 
-static inline void	poparg2(t_varg *arg, int type, va_list *ap)
+static inline void	poparg2(t_varg *arg, int type, va_list ap)
 {
 	if (type == T_SIZET)
-		arg->u = va_arg(*ap, size_t);
+		arg->u = va_arg(ap, size_t);
 	else if (type == T_IMAX)
-		arg->i = va_arg(*ap, intmax_t);
+		arg->i = va_arg(ap, intmax_t);
 	else if (type == T_UMAX)
-		arg->u = va_arg(*ap, uintmax_t);
+		arg->u = va_arg(ap, uintmax_t);
 	else if (type == T_PDIFF)
-		arg->i = va_arg(*ap, ssize_t);
+		arg->i = va_arg(ap, ssize_t);
 	else if (type == T_DBL)
-		arg->f = va_arg(*ap, double);
+		arg->f = va_arg(ap, double);
 	else if (type == T_LDBL)
-		arg->f = va_arg(*ap, long double);
+		arg->f = va_arg(ap, long double);
 }
 
-static inline void	poparg(t_varg *arg, int type, va_list *ap)
+static inline void	poparg(t_varg *arg, int type, va_list ap)
 {
 	if (type == T_PTR)
-		arg->p = va_arg(*ap, void *);
+		arg->p = va_arg(ap, void *);
 	else if (type == T_INT)
-		arg->i = va_arg(*ap, int);
+		arg->i = va_arg(ap, int);
 	else if (type == T_UINT)
-		arg->i = va_arg(*ap, unsigned int);
+		arg->i = va_arg(ap, unsigned int);
 	else if (type == T_LONG)
-		arg->i = va_arg(*ap, long);
+		arg->i = va_arg(ap, long);
 	else if (type == T_ULONG)
-		arg->u = va_arg(*ap, unsigned long);
+		arg->u = va_arg(ap, unsigned long);
 	else if (type == T_ULLONG)
-		arg->u = va_arg(*ap, unsigned long long);
+		arg->u = va_arg(ap, unsigned long long);
 	else if (type == T_SHORT)
-		arg->i = (short)va_arg(*ap, int);
+		arg->i = (short)va_arg(ap, int);
 	else if (type == T_USHORT)
-		arg->u = (unsigned short)va_arg(*ap, int);
+		arg->u = (unsigned short)va_arg(ap, int);
 	else if (type == T_CHAR)
-		arg->i = (signed char)va_arg(*ap, int);
+		arg->i = (signed char)va_arg(ap, int);
 	else if (type == T_UCHAR)
-		arg->u = (unsigned char)va_arg(*ap, int);
+		arg->u = (unsigned char)va_arg(ap, int);
 	else if (type == T_LLONG)
-		arg->i = va_arg(*ap, long long);
+		arg->i = va_arg(ap, long long);
 	else
 		poparg2(arg, type, ap);
 }
 
-inline int			iofmt_poptype(t_varg *arg, int *type, char **s, va_list *ap)
+inline int			iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap)
 {
 	uint32_t	st;
 	uint32_t	ps;

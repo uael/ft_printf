@@ -75,7 +75,7 @@ inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 		if ((ret += iofmt_out(f, fmt, pct++ - fmt)) > INT_MAX ||
 			iofmt_parse(&fm, &pct))
 			return (doerr(EOVERFLOW));
-		if (iofmt_poptype(&arg, &type, &pct, &ap) < 0)
+		if (iofmt_poptype(&arg, &type, &pct, ap) < 0)
 			return (doerr(EINVAL));
 		if ((type = iofmt_eval(type, fm, arg, f)) < 0)
 			return (type);

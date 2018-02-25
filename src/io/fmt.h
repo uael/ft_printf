@@ -42,7 +42,7 @@ typedef struct	s_fmt
 }				t_fmt;
 
 extern int		iofmt_parse(t_fmt *f, char **sp);
-extern int		iofmt_poptype(t_varg *arg, int *type, char **s, va_list *ap);
+extern int		iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap);
 extern size_t	iofmt_out(t_stream *f, const char *s, size_t l);
 extern void		iofmt_pad(t_stream *f, char c, int w, size_t l, int fl);
 extern int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s);
