@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io/asprintf.c                                      :+:      :+:    :+:   */
+/*   io/fmt/fmt_01.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
+#include <limits.h>
+#include <string.h>
+#include <float.h>
+#include <errno.h>
 
-int	ft_asprintf(char **s, char const *fmt, ...)
+#include "internal.h"
+
+int		iofmt_fmts(int t, t_fmt *f, t_varg arg, char *buf)
 {
-	int		ret;
-	va_list	ap;
-
-	va_start(ap, fmt);
-	ret = ft_vasprintf(s, fmt, ap);
-	va_end(ap);
-	return (ret);
+	(void)t;
+	(void)buf;
+	f->beg = arg.p ? arg.p : "(null)";
+	f->end = f->beg + strnlen(f->beg, (size_t)(f->p < 0 ? INT_MAX : f->p));
+	if (f->p < 0 && *f->end)
+	{
+		errno = EOVERFLOW;
+		return (-1);
+	}
+	f->p = (int32_t)(f->end - f->beg);
+	f->f &= ~ZERO_PAD;
+	return (0);
 }

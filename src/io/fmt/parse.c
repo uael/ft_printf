@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io/asprintf.c                                      :+:      :+:    :+:   */
+/*   io/fmt/parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
+#include <ctype.h>
+#include <limits.h>
+#include <string.h>
 
-int	ft_asprintf(char **s, char const *fmt, ...)
+#include "../fmt.h"
+
+static inline int	atoio(char **s)
 {
-	int		ret;
-	va_list	ap;
+	int i;
 
-	va_start(ap, fmt);
-	ret = ft_vasprintf(s, fmt, ap);
-	va_end(ap);
-	return (ret);
+	i = 0;
+	while (isdigit(**s))
+	{
+		if ((size_t)i > INT_MAX / 10U || (**s - '0') > INT_MAX - 10 * i)
+			i = -1;
+		else
+			i = 10 * i + (**s - '0');
+		++*s;
+	}
+	return (i);
+}
+
+inline int			iofmt_parse(t_fmt *f, char **sp)
+{
+	bzero(f, sizeof(t_fmt));
+	while ((**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
+		f->f |= 1U << (*(*sp)++ - ' ');
+	if ((f->w = atoio(sp) < 0))
+		return (-1);
+	if (**sp == '.')
+	{
+		++*sp;
+		f->p = atoio(sp);
+	}
+	else
+		f->p = -1;
+	return (0);
 }

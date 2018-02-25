@@ -25,6 +25,7 @@ typedef struct	s_stream
 {
 	int			fd;
 	int8_t		lbf;
+	int8_t		mode;
 	int8_t		flags;
 	int8_t		lock;
 	void		*cookie;
@@ -32,6 +33,8 @@ typedef struct	s_stream
 	t_close		*close;
 	size_t		buf_size;
 	uint8_t		*buf;
+	uint8_t		*rpos;
+	uint8_t		*rend;
 	uint8_t		*wpos;
 	uint8_t		*wbase;
 	uint8_t		*wend;
@@ -39,6 +42,8 @@ typedef struct	s_stream
 
 extern t_stream	*g_stdout;
 extern t_stream	*g_stderr;
+
+extern size_t	ft_fwrite(t_stream *f, void const *src, size_t n, size_t isz);
 
 extern int		ft_asprintf(char **s, char const *fmt, ...);
 extern int		ft_dprintf(int fd, char const *fmt, ...);

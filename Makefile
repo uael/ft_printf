@@ -38,9 +38,10 @@ LIB_NAME = $(LIBS)
 endif
 3TH_NAME =
 SRC_NAME = \
-  io/asprintf.c io/dprintf.c io/fprintf.c io/printf.c io/snprintf.c \
-  io/sprintf.c io/vasprintf.c io/vdprintf.cio/vfprintf.c io/vprintf.c \
-  io/vsnprintf.c io/vsprintf.c
+  io/fmt/eval.c io/fmt/fmt_01.c io/fmt/parse.c io/fmt/type.c \
+  io/asprintf.c io/dprintf.c io/fprintf.c io/fwrite.c io/printf.c \
+  io/snprintf.c io/sprintf.c io/stderr.c io/stdio.c io/stdout.c io/vasprintf.c \
+  io/vdprintf.c io/vfprintf.c io/vprintf.c io/vsnprintf.c io/vsprintf.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
@@ -131,6 +132,9 @@ endif
 
 re: clean all
 
+test: all
+	./test.sh $(NAME)
+
 -include $(DEP)
 
 ifndef VERBOSE
@@ -139,4 +143,4 @@ ifndef VERBOSE
  endif
 endif
 
-.PHONY: all, dev, san, mecry, $(PROJECT).a, clean, fclean, re
+.PHONY: all, dev, san, mecry, $(PROJECT).a, clean, fclean, re, test
