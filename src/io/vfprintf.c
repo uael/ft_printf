@@ -64,10 +64,10 @@ inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 			iofmt_parse(&fm, &pct))
 			return (doerr(EOVERFLOW));
 		if (iofmt_poptype(&arg, &type, &pct, ap) < 0)
-			return (doerr(EINVAL));
-		if ((type = iofmt_eval(type, fm, arg, f)) < 0)
+			type = 0;
+		else if ((type = iofmt_eval(type, fm, arg, f)) < 0)
 			return (type);
-		if (type + ret > INT_MAX)
+		else if (type + ret > INT_MAX)
 			return (doerr(EOVERFLOW));
 		ret += type;
 		fmt = pct;
