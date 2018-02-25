@@ -14,6 +14,7 @@
 # define LIBFT_IO_H
 
 # include <stdarg.h>
+# include <stdint.h>
 # include <sys/types.h>
 
 struct s_stream;
