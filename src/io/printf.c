@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vasprintf.h                                        :+:      :+:    :+:   */
+/*   printf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,19 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft/io.h"
 
-#include "ft_printf.h"
-
-int	ft_vasprintf(char **s, const char *fmt, va_list ap)
+int	ft_printf(char const *fmt, ...)
 {
 	int		ret;
-	va_list	ap2;
+	va_list	ap;
 
-	va_copy(ap2, ap);
-	ret = ft_vsnprintf(NULL, 0, fmt, ap2);
-	va_end(ap2);
-	if (ret < 0 || !(*s = malloc(ret + 1U)))
-		return (-1);
-	return (ft_vsnprintf(*s, ret + 1U, fmt, ap));
+	va_start(ap, fmt);
+	ret = ft_vfprintf(g_stdout, fmt, ap);
+	va_end(ap);
+	return (ret);
 }

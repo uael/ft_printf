@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   libft/io.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef LIBFT_IO_H
+# define LIBFT_IO_H
 
 # include <stdarg.h>
 # include <sys/types.h>
@@ -19,18 +19,22 @@
 struct s_stream;
 
 typedef size_t	(t_write)(struct s_stream *, const uint8_t *, size_t);
+typedef int		(t_close)(struct s_stream *);
 
 typedef struct	s_stream
 {
 	int			fd;
 	int8_t		lbf;
+	int8_t		flags;
 	int8_t		lock;
 	void		*cookie;
 	t_write		*write;
+	t_close		*close;
 	size_t		buf_size;
 	uint8_t		*buf;
 	uint8_t		*wpos;
 	uint8_t		*wbase;
+	uint8_t		*wend;
 }				t_stream;
 
 extern t_stream	*g_stdout;

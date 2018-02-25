@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vdprintf.h                                         :+:      :+:    :+:   */
+/*   stderr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <sys/uio.h>
+#include <unistd.h>
 
-#include "ft_printf.h"
+#include "internal.h"
 
-static size_t	dwrite(t_stream *f, uint8_t const *buf, size_t len)
-{
-	(void)f;
-	(void)buf;
-	(void)len;
-	return (0);
-}
+static uint8_t	g_buf[0];
+static t_stream	g_f = {
+	.buf = g_buf,
+	.buf_size = 0,
+	.fd = STDERR_FILENO,
+	.flags = FT_FPERM | FT_FNORD,
+	.lbf = -1,
+	.write = stdiowrite,
+	.close = stdioclose,
+	.lock = -1,
+};
+t_stream		*g_stderr = &g_f;
 
-int				ft_vdprintf(int fd, const char *fmt, va_list ap)
-{
-	t_stream f;
-
-	f = (t_stream){
-		.fd = fd,
-		.lbf = EOF,
-		.write = dwrite,
-		.buf = (void *)fmt,
-		.buf_size = 0,
-		.lock = -1
-	};
-	return (ft_vfprintf(&f, fmt, ap));
-}

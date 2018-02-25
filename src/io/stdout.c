@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vfprintf.h                                         :+:      :+:    :+:   */
+/*   stdout.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <unistd.h>
 
-#include <ctype.h>
-#include <errno.h>
-#include <float.h>
-#include <inttypes.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <string.h>
+#include "internal.h"
 
-int	ft_vfprintf(t_stream *f, const char *fmt, va_list ap)
-{
-	(void)f;
-	(void)fmt;
-	(void)ap;
-	return (-1);
-}
+static uint8_t	g_buf[FT_BUFSIZ];
+static t_stream	g_f = {
+	.buf = g_buf,
+	.buf_size = sizeof g_buf,
+	.fd = STDOUT_FILENO,
+	.flags = FT_FPERM | FT_FNORD,
+	.lbf = '\n',
+	.write = stdiowrite,
+	.close = stdioclose,
+	.lock = -1,
+};
+t_stream		*g_stdout = &g_f;

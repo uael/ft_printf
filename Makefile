@@ -38,18 +38,9 @@ LIB_NAME = $(LIBS)
 endif
 3TH_NAME =
 SRC_NAME = \
-  asprintf.c \
-  dprintf.c \
-  fprintf.c \
-  printf.c \
-  snprintf.c \
-  sprintf.c \
-  vasprintf.c \
-  vdprintf.c \
-  vfprintf.c \
-  vprintf.c \
-  vsnprintf.c \
-  vsprintf.c
+  io/asprintf.c io/dprintf.c io/fprintf.c io/printf.c io/snprintf.c \
+  io/sprintf.c io/vasprintf.c io/vdprintf.cio/vfprintf.c io/vprintf.c \
+  io/vsnprintf.c io/vsprintf.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))

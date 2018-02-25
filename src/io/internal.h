@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vsnprintf.h                                        :+:      :+:    :+:   */
+/*   internal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VSNPRINTF_H
-# define VSNPRINTF_H
+#ifndef INTERNAL_H
+# define INTERNAL_H
 
-# include "ft_printf.h"
+# include "libft/io.h"
 
-typedef struct	s_cookie
-{
-	char		*s;
-	size_t		n;
-}				t_cookie;
+# define FT_FPERM (1 << 0)
+# define FT_FNORD (1 << 1)
+# define FT_FERRO (1 << 2)
+
+# define FT_BUFSIZ (4096)
+
+size_t	stdiowrite(t_stream *f, uint8_t const *s, size_t len);
+int		stdioclose(t_stream *f);
 
 #endif

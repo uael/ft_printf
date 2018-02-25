@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fprintf.h                                          :+:      :+:    :+:   */
+/*   vfprintf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft/io.h"
 
-int	ft_fprintf(t_stream *f, const char *fmt, ...)
+#include <ctype.h>
+#include <errno.h>
+#include <float.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+
+int	ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 {
-	int		ret;
-	va_list	ap;
-
-	va_start(ap, fmt);
-	ret = ft_vfprintf(f, fmt, ap);
-	va_end(ap);
-	return (ret);
+	(void)f;
+	(void)fmt;
+	(void)ap;
+	return (-1);
 }

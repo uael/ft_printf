@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprintf.h                                          :+:      :+:    :+:   */
+/*   dprintf.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft/io.h"
 
-int	ft_sprintf(char *s, const char *fmt, ...)
+int	ft_dprintf(int fd, char const *fmt, ...)
 {
 	int		ret;
 	va_list	ap;
 
 	va_start(ap, fmt);
-	ret = ft_vsprintf(s, fmt, ap);
+	ret = ft_vdprintf(fd, fmt, ap);
 	va_end(ap);
 	return (ret);
 }
