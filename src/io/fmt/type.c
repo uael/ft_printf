@@ -77,13 +77,15 @@ static uint8_t const g_states[]['z'-'%'+1] = {
 static inline void	poparg2(t_varg *arg, int type, va_list ap)
 {
 	if (type == T_SIZET)
-		arg->u = va_arg(ap, size_t);
+		arg->i = va_arg(ap, size_t);
 	else if (type == T_IMAX)
-		arg->i = va_arg(ap, intmax_t);
+		arg->i = (uintmax_t)va_arg(ap, intmax_t);
 	else if (type == T_UMAX)
-		arg->u = va_arg(ap, uintmax_t);
+		arg->i = va_arg(ap, uintmax_t);
 	else if (type == T_PDIFF)
-		arg->i = va_arg(ap, ssize_t);
+		arg->i = (uintmax_t)va_arg(ap, ssize_t);
+	else if (type == T_UIPTR)
+		arg->i = (uintptr_t)va_arg(ap, void *);
 	else if (type == T_DBL)
 		arg->f = va_arg(ap, double);
 	else if (type == T_LDBL)
@@ -95,25 +97,25 @@ static inline void	poparg(t_varg *arg, int type, va_list ap)
 	if (type == T_PTR)
 		arg->p = va_arg(ap, void *);
 	else if (type == T_INT)
-		arg->i = va_arg(ap, int);
+		arg->i = (uintmax_t)va_arg(ap, int);
 	else if (type == T_UINT)
 		arg->i = va_arg(ap, unsigned int);
 	else if (type == T_LONG)
-		arg->i = va_arg(ap, long);
+		arg->i = (uintmax_t)va_arg(ap, long);
 	else if (type == T_ULONG)
-		arg->u = va_arg(ap, unsigned long);
+		arg->i = va_arg(ap, unsigned long);
 	else if (type == T_ULLONG)
-		arg->u = va_arg(ap, unsigned long long);
+		arg->i = va_arg(ap, unsigned long long);
 	else if (type == T_SHORT)
-		arg->i = (short)va_arg(ap, int);
+		arg->i = (uintmax_t)(short)va_arg(ap, int);
 	else if (type == T_USHORT)
-		arg->u = (unsigned short)va_arg(ap, int);
+		arg->i = (unsigned short)va_arg(ap, int);
 	else if (type == T_CHAR)
-		arg->i = (signed char)va_arg(ap, int);
+		arg->i = (uintmax_t)(signed char)va_arg(ap, int);
 	else if (type == T_UCHAR)
-		arg->u = (unsigned char)va_arg(ap, int);
+		arg->i = (unsigned char)va_arg(ap, int);
 	else if (type == T_LLONG)
-		arg->i = va_arg(ap, long long);
+		arg->i = (uintmax_t)va_arg(ap, long long);
 	else
 		poparg2(arg, type, ap);
 }
@@ -127,16 +129,18 @@ inline int			iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap)
 	if (OOB(**s))
 		return (-1);
 	ps = st;
-	st = g_states[st]S(*(*s)++);
+	if (!(st = g_states[st]S(**s)))
+		return (-1);
+	++*s;
 	while (st - 1 < T_STOP)
 	{
 		if (OOB(**s))
 			return (-1);
 		ps = st;
-		st = g_states[st]S(*(*s)++);
+		if (!(st = g_states[st]S(**s)))
+			return (-1);
+		++*s;
 	}
-	if (!st)
-		return (-1);
 	if (st != T_NOARG)
 		poparg(arg, st, ap);
 	*type = (*s)[-1];

@@ -28,9 +28,17 @@ enum {
 	T_MAXSTATE
 };
 
-typedef int		(t_fmtcb)(int t, t_fmt *f, t_varg arg, char *buf);
+typedef ssize_t	(t_fmtcb)(t_stream *s, t_fmt *f, t_varg arg, char *buf);
 
-extern int		iofmt_fmtpct(int t, t_fmt *f, t_varg arg, char *buf);
-extern int		iofmt_fmts(int t, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmts(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtsu(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtp(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtx(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmto(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtdi(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtu(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtc(t_stream *s, t_fmt *f, t_varg arg, char *buf);
+extern ssize_t	iofmt_fmtcu(t_stream *s, t_fmt *f, t_varg arg, char *buf);
 
 #endif

@@ -48,35 +48,20 @@ else ()
     PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
 endif ()
 
-if (ftprintf_ENABLE_TEST)
-  enable_testing()
-  add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
-  file(GLOB ftprintf_TEST_SRCS ${ftprintf_TEST_SRCS}
-    ${ftprintf_TEST_DIR}/*.c)
-  foreach (ftprintf_TEST_SRC ${ftprintf_TEST_SRCS})
-    get_filename_component(ftprintf_TEST_NAME ${ftprintf_TEST_SRC} NAME_WE)
-    set(test test_ftprintf_${ftprintf_TEST_NAME})
-    add_executable(${test} ${ftprintf_TEST_SRC})
-    set_property(TARGET ${test}
-      PROPERTY C_STANDARD 90)
-    add_dependencies(${test} ftprintf)
-    add_dependencies(check ${test})
-    target_include_directories(${test} PUBLIC
-      ${ftprintf_TEST_DIR})
-    target_link_libraries(${test} ftprintf)
-    target_compile_definitions(${test}
-      PRIVATE $<$<CONFIG:Debug>:DEBUG>$<$<CONFIG:Release>:NDEBUG>)
-    add_test(ftprintf_${ftprintf_TEST_NAME} ${test}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
-    if (MSVC)
-      target_compile_options(${test}
-        PRIVATE /MTd /Oy /W3
-        PRIVATE /D_CRT_SECURE_NO_WARNINGS
-        PRIVATE /Od)
-    else ()
-      target_compile_options(${test}
-        PRIVATE -fomit-frame-pointer -ansi
-        PRIVATE -O0 -g3)
-    endif ()
-  endforeach ()
+add_executable(tests main.c)
+target_link_libraries(tests ftprintf)
+
+target_compile_definitions(tests
+  PRIVATE $<$<CONFIG:Debug>:DEBUG>$<$<CONFIG:Release>:NDEBUG>
+  PRIVATE API_COMPILE)
+if (MSVC)
+  target_compile_options(tests
+    PRIVATE /MT$<$<CONFIG:Debug>:d> /Oy /W3
+    PRIVATE /D_CRT_SECURE_NO_WARNINGS /Dinline=__inline
+    PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
+else ()
+  target_compile_options(tests
+    PRIVATE -fomit-frame-pointer -ansi
+    PRIVATE -Wno-missing-field-initializers -Wno-missing-braces
+    PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
 endif ()

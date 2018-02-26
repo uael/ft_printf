@@ -19,15 +19,24 @@
 
 static t_fmtcb	*g_fmts[] = {
 	['%' - '%'] = iofmt_fmtpct,
-	['s' - '%'] = iofmt_fmts
+	['s' - '%'] = iofmt_fmts,
+	['D' - '%'] = iofmt_fmtsu,
+	['p' - '%'] = iofmt_fmtp,
+	['x' - '%'] = iofmt_fmtx,
+	['o' - '%'] = iofmt_fmto,
+	['d' - '%'] = iofmt_fmtdi,
+	['i' - '%'] = iofmt_fmtdi,
+	['u' - '%'] = iofmt_fmtu,
+	['c' - '%'] = iofmt_fmtc,
+	['C' - '%'] = iofmt_fmtcu,
 };
 
-static int		evalt(int t, t_fmt *f, t_varg arg, char *buf)
+static ssize_t	evalt(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 {
 	t_fmtcb *cb;
 
-	if ((cb = g_fmts[t - '%']))
-		return (cb(t, f, arg, buf));
+	if ((cb = g_fmts[f->t - '%']))
+		return (cb(s, f, arg, buf));
 	errno = EINVAL;
 	return (-1);
 }
@@ -35,27 +44,28 @@ static int		evalt(int t, t_fmt *f, t_varg arg, char *buf)
 inline int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s)
 {
 	char		buf[sizeof(uintmax_t) * 3 + 3 + LDBL_MANT_DIG / 4];
-	const char	*prefix = "-+   0X0x";
-	int			pl;
+	ssize_t		r;
 
+	f.t = t;
+	f.prefix = "-+   0X0x";
 	f.end = buf + sizeof(buf);
 	(f.f & LEFT_ADJ) ? (f.f &= ~ZERO_PAD) : 0;
-	if ((pl = evalt(t, &f, a, buf)))
-		return (pl);
+	if ((r = evalt(s, &f, a, buf)))
+		return ((int)r);
 	if (f.p < f.end - f.beg)
 		f.p = (int32_t)(f.end - f.beg);
-	if (f.p > INT_MAX - pl)
+	if (f.p > INT_MAX - f.pl)
 	{
 		errno = EOVERFLOW;
 		return (-1);
 	}
-	if (f.w < pl + f.p)
-		f.w = (int16_t)(pl + f.p);
-	iofmt_pad(s, ' ', f.w, (size_t)(pl+f.p), f.f);
-	iofmt_out(s, prefix, (size_t)pl);
-	iofmt_pad(s, '0', f.w, (size_t)(pl+f.p), f.f ^ ZERO_PAD);
+	if (f.w < f.pl + f.p)
+		f.w = (int16_t)(f.pl + f.p);
+	iofmt_pad(s, ' ', f.w, (size_t)(f.pl + f.p), f.f);
+	iofmt_out(s, f.prefix, (size_t)f.pl);
+	iofmt_pad(s, '0', f.w, (size_t)(f.pl + f.p), f.f ^ ZERO_PAD);
 	iofmt_pad(s, '0', f.p, f.end - f.beg, 0);
 	iofmt_out(s, f.beg, f.end - f.beg);
-	iofmt_pad(s, ' ', f.w, (size_t)(pl+f.p), f.f ^ LEFT_ADJ);
+	iofmt_pad(s, ' ', f.w, (size_t)(f.pl + f.p), f.f ^ LEFT_ADJ);
 	return (f.w);
 }

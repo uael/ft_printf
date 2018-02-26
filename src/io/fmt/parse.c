@@ -35,7 +35,8 @@ static inline int	atoio(char **s)
 inline int			iofmt_parse(t_fmt *f, char **sp)
 {
 	bzero(f, sizeof(t_fmt));
-	while ((**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
+	while (**sp && (**sp - ' ') < 32 &&
+		(FLAGMASK & (1U << (**sp - ' '))))
 		f->f |= 1U << (*(*sp)++ - ' ');
 	if ((f->w = atoio(sp) < 0))
 		return (-1);
@@ -43,6 +44,7 @@ inline int			iofmt_parse(t_fmt *f, char **sp)
 	{
 		++*sp;
 		f->p = atoio(sp);
+		f->xp = 1;
 	}
 	else
 		f->p = -1;

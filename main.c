@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io/snprintf.c                                      :+:      :+:    :+:   */
+/*   io/asprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
+#include <stdio.h>
+
 #include "libft/io.h"
 
-int	ft_snprintf(char *s, size_t n, char const *fmt, ...)
+int	main(void)
 {
-	int		ret;
-	va_list	ap;
-
-	va_start(ap, fmt);
-	ret = ft_vsnprintf(s, n, fmt, ap);
-	va_end(ap);
-	return (ret);
+	printf("%S\n", L"米");
+	ft_printf("%S\n", L"米");
+	return (0);
 }

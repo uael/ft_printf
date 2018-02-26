@@ -57,6 +57,9 @@ size_t	stdiowrite(t_stream *f, uint8_t const *s, size_t len)
 		f->flags |= FT_FERRO;
 		return (0);
 	}
+	f->wend = f->buf + f->buf_size;
+	f->wpos = f->buf;
+	f->wbase = f->buf;
 	return (outc + out);
 }
 

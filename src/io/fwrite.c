@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   io/fwrite.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
+/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <string.h>
 #include <stdio.h>
 
@@ -13,7 +25,8 @@ static int	towrite(t_stream *f)
 	}
 	f->rpos = 0;
 	f->rend = 0;
-	f->wpos = f->wbase = f->buf;
+	f->wpos = f->buf;
+	f->wbase = f->buf;
 	f->wend = f->buf + f->buf_size;
 	return (0);
 }
@@ -57,4 +70,20 @@ size_t		ft_fwrite(t_stream *f, void const *src, size_t size, size_t nmemb)
 		nmemb = 0;
 	k = fwritex(f, src, l);
 	return (k == l ? nmemb : k / size);
+}
+
+int			ft_fflush(t_stream *f)
+{
+	if (f->wpos > f->wbase)
+	{
+		f->write(f, 0, 0);
+		if (!f->wpos)
+			return (EOF);
+	}
+	f->wpos = 0;
+	f->wbase = 0;
+	f->wend = 0;
+	f->rpos = 0;
+	f->rend = 0;
+	return (0);
 }

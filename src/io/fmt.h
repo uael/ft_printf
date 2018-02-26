@@ -13,21 +13,22 @@
 #ifndef IO_FMT_H
 # define IO_FMT_H
 
+# include <stddef.h>
+
 # include "internal.h"
 
-#define ALT_FORM   (1U<<('#'-' '))
-#define ZERO_PAD   (1U<<('0'-' '))
-#define LEFT_ADJ   (1U<<('-'-' '))
-#define PAD_POS    (1U<<(' '-' '))
-#define MARK_POS   (1U<<('+'-' '))
-#define GROUPED    (1U<<('\''-' '))
+# define ALT_FORM   (1U<<('#'-' '))
+# define ZERO_PAD   (1U<<('0'-' '))
+# define LEFT_ADJ   (1U<<('-'-' '))
+# define PAD_POS    (1U<<(' '-' '))
+# define MARK_POS   (1U<<('+'-' '))
+# define GROUPED    (1U<<('\''-' '))
 
-#define FLAGMASK (ALT_FORM|ZERO_PAD|LEFT_ADJ|PAD_POS|MARK_POS|GROUPED)
+# define FLAGMASK (ALT_FORM|ZERO_PAD|LEFT_ADJ|PAD_POS|MARK_POS|GROUPED)
 
 typedef union	u_varg
 {
-	uintmax_t	u;
-	intmax_t	i;
+	uintmax_t	i;
 	long double	f;
 	void		*p;
 }				t_varg;
@@ -39,6 +40,11 @@ typedef struct	s_fmt
 	int32_t		p;
 	char		*beg;
 	char		*end;
+	int			t;
+	const char	*prefix;
+	int			pl;
+	char		xp;
+	wchar_t		wc[2];
 }				t_fmt;
 
 extern int		iofmt_parse(t_fmt *f, char **sp);
