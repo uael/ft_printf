@@ -20,13 +20,17 @@
 static t_fmtcb	*g_fmts[] = {
 	['%' - '%'] = iofmt_fmtpct,
 	['s' - '%'] = iofmt_fmts,
-	['D' - '%'] = iofmt_fmtsu,
+	['S' - '%'] = iofmt_fmtsu,
 	['p' - '%'] = iofmt_fmtp,
+	['X' - '%'] = iofmt_fmtx,
 	['x' - '%'] = iofmt_fmtx,
+	['O' - '%'] = iofmt_fmto,
 	['o' - '%'] = iofmt_fmto,
+	['D' - '%'] = iofmt_fmtdi,
 	['d' - '%'] = iofmt_fmtdi,
 	['i' - '%'] = iofmt_fmtdi,
 	['u' - '%'] = iofmt_fmtu,
+	['U' - '%'] = iofmt_fmtu,
 	['c' - '%'] = iofmt_fmtc,
 	['C' - '%'] = iofmt_fmtcu,
 };

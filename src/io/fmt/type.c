@@ -26,6 +26,7 @@ static uint8_t const g_states[]['z'-'%'+1] = {
 		S('m') = T_NOARG,
 		S('l') = T_LPRE, S('h') = T_HPRE, S('L') = T_BIGLPRE,
 		S('z') = T_ZTPRE, S('j') = T_JPRE, S('t') = T_ZTPRE,
+		S('D') = T_LONG, S('O') = T_ULONG, S('U') = T_ULONG,
 	},
 	{
 		S('%') = T_NOARG, S('d') = T_LONG, S('i') = T_LONG,

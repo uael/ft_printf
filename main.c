@@ -17,7 +17,5 @@
 
 int	main(void)
 {
-	printf("%S\n", L"米");
-	ft_printf("%S\n", L"米");
-	return (0);
+	return (ft_printf("%S", L"米"));
 }
