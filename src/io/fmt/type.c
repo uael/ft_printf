@@ -35,12 +35,16 @@ static uint8_t const g_states[]['z'-'%'+1] = {
 		S('E') = T_DBL, S('F') = T_DBL, S('G') = T_DBL, S('A') = T_DBL,
 		S('c') = T_INT, S('s') = T_PTR, S('n') = T_PTR,
 		S('l') = T_LLPRE,
+		S('D') = T_LONG, S('O') = T_ULONG, S('U') = T_ULONG,
+		S('p') = T_UIPTR
 	},
 	{
 		S('%') = T_NOARG, S('d') = T_LLONG, S('i') = T_LLONG,
 		S('o') = T_ULLONG, S('u') = T_ULLONG,
 		S('x') = T_ULLONG, S('X') = T_ULLONG,
 		S('n') = T_PTR,
+		S('D') = T_LLONG, S('O') = T_ULLONG, S('U') = T_ULLONG,
+		S('p') = T_UIPTR
 	},
 	{
 		S('%') = T_NOARG, S('d') = T_SHORT, S('i') = T_SHORT,
@@ -48,12 +52,18 @@ static uint8_t const g_states[]['z'-'%'+1] = {
 		S('x') = T_USHORT, S('X') = T_USHORT,
 		S('n') = T_PTR,
 		S('h') = T_HHPRE,
+		S('D') = T_INT, S('O') = T_UINT, S('U') = T_UINT,
+		S('S') = T_PTR,
+		S('C') = T_INT
 	},
 	{
 		S('%') = T_NOARG, S('d') = T_CHAR, S('i') = T_CHAR,
 		S('o') = T_UCHAR, S('u') = T_UCHAR,
 		S('x') = T_UCHAR, S('X') = T_UCHAR,
 		S('n') = T_PTR,
+		S('D') = T_USHORT, S('O') = T_USHORT, S('U') = T_USHORT,
+		S('S') = T_PTR,
+		S('C') = T_INT
 	},
 	{
 		S('%') = T_NOARG, S('e') = T_LDBL, S('f') = T_LDBL, S('g') = T_LDBL,
@@ -65,13 +75,19 @@ static uint8_t const g_states[]['z'-'%'+1] = {
 		S('%') = T_NOARG, S('d') = T_PDIFF, S('i') = T_PDIFF,
 		S('o') = T_SIZET, S('u') = T_SIZET,
 		S('x') = T_SIZET, S('X') = T_SIZET,
+		S('D') = T_PDIFF, S('O') = T_SIZET, S('U') = T_SIZET,
 		S('n') = T_PTR,
+		S('S') = T_PTR,
+		S('C') = T_PDIFF
 	},
 	{
 		S('%') = T_NOARG, S('d') = T_IMAX, S('i') = T_IMAX,
 		S('o') = T_UMAX, S('u') = T_UMAX,
 		S('x') = T_UMAX, S('X') = T_UMAX,
+		S('D') = T_IMAX, S('O') = T_UMAX, S('U') = T_UMAX,
 		S('n') = T_PTR,
+		S('S') = T_PTR,
+		S('C') = T_IMAX
 	}
 };
 

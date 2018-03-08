@@ -67,11 +67,14 @@ inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 			fmt = pct;
 			break ;
 		}
-		if (iofmt_parse(&fm, &pct))
+		if (iofmt_parse(&fm, &pct, ap))
 			return (doerr(EOVERFLOW));
 		if (iofmt_poptype(&arg, &type, &pct, ap) < 0)
-			type = 0;
-		else if ((type = iofmt_eval(type, fm, arg, f)) < 0)
+		{
+			type = 'c';
+			arg.i = (uintmax_t)*pct++;
+		}
+		if ((type = iofmt_eval(type, fm, arg, f)) < 0)
 			return (0);
 		else if (type + ret > INT_MAX)
 			return (doerr(EOVERFLOW));

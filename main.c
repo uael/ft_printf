@@ -12,10 +12,13 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <locale.h>
+#include <limits.h>
 
 #include "libft/io.h"
 
 int	main(void)
 {
-	return (ft_printf("%S", L"米"));
+	setlocale(LC_ALL, "");
+	return (ft_printf("{%03.2d}", 0));
 }

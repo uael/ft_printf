@@ -31,12 +31,14 @@ function san_asnprintf {
 #include <sys/types.h>
 #include <unistd.h>
 #include <limits.h>
+#include <locale.h>
 #include "libft/io.h"
 
 int main() {
 	char *ft_printf_out;
 	ssize_t ft_printf_return;
 
+    setlocale(LC_ALL, "");
 	ft_printf_return = ft_asprintf(&ft_printf_out, FORMAT);
 
 	dprintf(1, "%zu:", ft_printf_return);
@@ -57,6 +59,7 @@ function asnprintf {
 #include <sys/types.h>
 #include <unistd.h>
 #include <limits.h>
+#include <locale.h>
 #include "libft/io.h"
 
 int main() {
@@ -65,6 +68,7 @@ int main() {
 	ssize_t ft_printf_return;
 	ssize_t printf_return;
 
+    setlocale(LC_ALL, "");
 	ft_printf_return = ft_asprintf(&ft_printf_out, FORMAT);
 	printf_return = asprintf(&printf_out, FORMAT);
 

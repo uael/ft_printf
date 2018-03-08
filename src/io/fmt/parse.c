@@ -32,21 +32,38 @@ static inline int	atoio(char **s)
 	return (i);
 }
 
-inline int			iofmt_parse(t_fmt *f, char **sp)
+inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 {
 	bzero(f, sizeof(t_fmt));
-	while (**sp && (**sp - ' ') < 32 &&
-		(FLAGMASK & (1U << (**sp - ' '))))
-		f->f |= 1U << (*(*sp)++ - ' ');
-	if ((f->w = atoio(sp) < 0))
+	while (**sp && (**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
+		f->flags |= 1U << (*(*sp)++ - ' ');
+	if (**sp == '*')
+	{
+		if ((f->width = (int16_t)va_arg(ap, int)) < 0)
+		{
+			f->flags |= LEFT_ADJ;
+			f->width = -f->width;
+		}
+		++*sp;
+	}
+	else if ((f->width = atoio(sp)) < 0)
 		return (-1);
 	if (**sp == '.')
 	{
-		++*sp;
-		f->p = atoio(sp);
-		f->xp = 1;
+		if (*(*sp + 1) == '*')
+		{
+			f->prec = va_arg(ap, int);
+			*sp += 2;
+			f->xp = f->prec >= 0;
+		}
+		else
+		{
+			++*sp;
+			f->prec = atoio(sp);
+			f->xp = 1;
+		}
 	}
 	else
-		f->p = -1;
+		f->prec = -1;
 	return (0);
 }

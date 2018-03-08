@@ -35,19 +35,20 @@ typedef union	u_varg
 
 typedef struct	s_fmt
 {
-	uint8_t		f;
-	int16_t		w;
-	int32_t		p;
+	uint32_t	flags;
+	int			width;
+	int			prec;
+	int			precl;
 	char		*beg;
 	char		*end;
-	int			t;
+	int			type;
 	const char	*prefix;
-	int			pl;
 	char		xp;
 	wchar_t		wc[2];
+	uint8_t		done;
 }				t_fmt;
 
-extern int		iofmt_parse(t_fmt *f, char **sp);
+extern int		iofmt_parse(t_fmt *f, char **sp, va_list ap);
 extern int		iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap);
 extern size_t	iofmt_out(t_stream *f, const char *s, size_t l);
 extern void		iofmt_pad(t_stream *f, char c, int w, size_t l, int fl);
