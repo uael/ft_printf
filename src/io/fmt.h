@@ -38,11 +38,11 @@ typedef struct	s_fmt
 	uint32_t	flags;
 	int			width;
 	int			prec;
-	int			precl;
 	char		*beg;
 	char		*end;
 	int			type;
-	const char	*prefix;
+	const char	*pref;
+	int			prefl;
 	char		xp;
 	wchar_t		wc[2];
 	uint8_t		done;

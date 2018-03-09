@@ -19,6 +19,7 @@
 
 int	main(void)
 {
-	setlocale(LC_ALL, "");
-	return (ft_printf("{%03.2d}", 0));
+	//setlocale(LC_ALL, "");
+	printf("%d\n", ft_printf("%S", L"米"));
+	return (0);
 }

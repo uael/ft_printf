@@ -33,14 +33,15 @@ static t_fmtcb	*g_fmts[] = {
 	['U' - '%'] = iofmt_fmtu,
 	['c' - '%'] = iofmt_fmtc,
 	['C' - '%'] = iofmt_fmtcu,
+	['m' - '%'] = iofmt_fmtm,
 };
 
-static ssize_t	evalt(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+static ssize_t	evalt(t_stream *s, t_fmt *f, t_varg arg)
 {
 	t_fmtcb *cb;
 
 	if ((cb = g_fmts[f->type - '%']))
-		return (cb(s, f, arg, buf));
+		return (cb(s, f, arg));
 	errno = EINVAL;
 	return (-1);
 }
@@ -51,25 +52,25 @@ inline int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s)
 	ssize_t		r;
 
 	f.type = t;
-	f.prefix = "-+   0X0x";
+	f.pref = "-+   0X0x";
 	f.end = buf + sizeof(buf);
 	(f.flags & LEFT_ADJ) ? (f.flags &= ~ZERO_PAD) : 0;
-	if ((r = evalt(s, &f, a, buf)) || f.done)
+	if ((r = evalt(s, &f, a)) || f.done)
 		return ((int)r);
 	if (f.prec < f.end - f.beg)
 		f.prec = (int32_t)(f.end - f.beg);
-	if (f.prec > INT_MAX - f.precl)
+	if (f.prec > INT_MAX - f.prefl)
 	{
 		errno = EOVERFLOW;
 		return (-1);
 	}
-	if (f.width < f.precl + f.prec)
-		f.width = (int16_t)(f.precl + f.prec);
-	iofmt_pad(s, ' ', f.width, (size_t)(f.precl + f.prec), f.flags);
-	iofmt_out(s, f.prefix, (size_t)f.precl);
-	iofmt_pad(s, '0', f.width, (size_t)(f.precl + f.prec), f.flags ^ ZERO_PAD);
+	if (f.width < f.prefl + f.prec)
+		f.width = (int16_t)(f.prefl + f.prec);
+	iofmt_pad(s, ' ', f.width, (size_t)(f.prefl + f.prec), f.flags);
+	iofmt_out(s, f.pref, (size_t)f.prefl);
+	iofmt_pad(s, '0', f.width, (size_t)(f.prefl + f.prec), f.flags ^ ZERO_PAD);
 	iofmt_pad(s, '0', f.prec, f.end - f.beg, 0);
 	iofmt_out(s, f.beg, f.end - f.beg);
-	iofmt_pad(s, ' ', f.width, (size_t)(f.precl + f.prec), f.flags ^ LEFT_ADJ);
+	iofmt_pad(s, ' ', f.width, (size_t)(f.prefl + f.prec), f.flags ^ LEFT_ADJ);
 	return (f.width);
 }

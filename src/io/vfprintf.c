@@ -20,14 +20,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-inline size_t	iofmt_out(t_stream *f, const char *s, size_t l)
+inline size_t		iofmt_out(t_stream *f, const char *s, size_t l)
 {
 	if (!(f->flags & FT_FERRO))
 		return (fwritex(f, (void *)s, l));
 	return (l);
 }
 
-inline void		iofmt_pad(t_stream *f, char c, int w, size_t l, int fl)
+inline void			iofmt_pad(t_stream *f, char c, int w, size_t l, int fl)
 {
 	char pad[256];
 
@@ -43,17 +43,34 @@ inline void		iofmt_pad(t_stream *f, char c, int w, size_t l, int fl)
 	iofmt_out(f, pad, l);
 }
 
-static int		doerr(int err)
+static inline int	doerr(int err)
 {
 	errno = err;
 	return (-1);
 }
 
-inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
+static inline int	printarg(t_stream *f, char **pct, va_list ap)
 {
+	int		type;
+	int		len;
 	t_fmt	fm;
 	t_varg	arg;
-	int		type;
+
+	if (iofmt_parse(&fm, pct, ap))
+		return (doerr(EOVERFLOW));
+	if (iofmt_poptype(&arg, &type, pct, ap) < 0)
+	{
+		type = 'c';
+		arg.i = (uintmax_t)*(*pct)++;
+	}
+	if ((len = iofmt_eval(type, fm, arg, f)) < 0)
+		return (len == -2 ? -1 : 0);
+	return (len);
+}
+
+inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
+{
+	int		len;
 	size_t	ret;
 	char	*pct;
 
@@ -67,22 +84,13 @@ inline int		ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 			fmt = pct;
 			break ;
 		}
-		if (iofmt_parse(&fm, &pct, ap))
+		if ((len = printarg(f, &pct, ap)) < 0 || len + ret > INT_MAX)
 			return (doerr(EOVERFLOW));
-		if (iofmt_poptype(&arg, &type, &pct, ap) < 0)
-		{
-			type = 'c';
-			arg.i = (uintmax_t)*pct++;
-		}
-		if ((type = iofmt_eval(type, fm, arg, f)) < 0)
-			return (0);
-		else if (type + ret > INT_MAX)
-			return (doerr(EOVERFLOW));
-		ret += type;
+		ret += len;
 		fmt = pct;
 	}
-	type = ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX
+	len = ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX
 		? doerr(EOVERFLOW) : (int)ret);
 	ft_fflush(f);
-	return (type);
+	return (len);
 }

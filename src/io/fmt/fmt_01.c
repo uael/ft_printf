@@ -15,16 +15,18 @@
 #include <errno.h>
 #include <wchar.h>
 #include <stdlib.h>
+#include <sys/param.h>
 
 #include "internal.h"
 
 static char *g_xdigits = "0123456789ABCDEF";
 
-ssize_t			iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
 	(void)arg;
+	if (f->xp && !f->prec)
+		f->prec = -1;
 	f->beg = "%";
 	f->end = f->beg + strnlen(f->beg, (size_t)(f->prec < 0 ? INT_MAX : f->prec));
 	if (f->prec < 0 && *f->end)
@@ -33,14 +35,27 @@ ssize_t			iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 		return (-1);
 	}
 	f->prec = (int32_t)(f->end - f->beg);
-	f->flags &= ~ZERO_PAD;
 	return (0);
 }
 
-ssize_t			iofmt_fmts(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtm(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
+	(void)arg;
+	f->beg = strerror(errno);
+	f->end = f->beg + strnlen(f->beg, (size_t)(f->prec < 0 ? INT_MAX : f->prec));
+	if (f->prec < 0 && *f->end)
+	{
+		errno = EOVERFLOW;
+		return (-1);
+	}
+	f->prec = (int32_t)(f->end - f->beg);
+	return (0);
+}
+
+ssize_t			iofmt_fmts(t_stream *s, t_fmt *f, t_varg arg)
+{
+	(void)s;
 	f->beg = arg.p ? arg.p : "(null)";
 	f->end = f->beg + strnlen(f->beg, (size_t)(f->prec < 0 ? INT_MAX : f->prec));
 	if (f->prec < 0 && *f->end)
@@ -52,12 +67,24 @@ ssize_t			iofmt_fmts(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 	return (0);
 }
 
+#define IS_CODEUNIT(c) ((unsigned)(c)-0xdf80 < 0x80)
+
 int	ft_wctomb(char *s, wchar_t wc)
 {
 	if (!s)
 		return (1);
 	if ((unsigned)wc < 0x80)
 	{
+		*s = (char)wc;
+		return (1);
+	}
+	else if (MB_CUR_MAX == 1)
+	{
+		if (!IS_CODEUNIT(wc))
+		{
+			errno = EILSEQ;
+			return (-1);
+		}
 		*s = (char)wc;
 		return (1);
 	}
@@ -86,23 +113,22 @@ int	ft_wctomb(char *s, wchar_t wc)
 	return (-1);
 }
 
-ssize_t			iofmt_fmtsu(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtsu(t_stream *s, t_fmt *f, t_varg arg)
 {
 	size_t	i;
 	int		l;
 	wchar_t	*ws;
-	char	mb[4];
+	char	mb[MB_CUR_MAX];
 
-	(void)buf;
 	if (!(ws = arg.p))
-		return (iofmt_fmts(s, f, arg, buf));
+		return (iofmt_fmts(s, f, arg));
 	f->done = 1;
 	i = 0;
 	l = 0;
 	while (i < (size_t)f->prec && *ws && (l = ft_wctomb(mb, *ws++)) >= 0 && (size_t)l <= (size_t)(f->prec - i))
 		i += l;
 	if (l < 0)
-		return (-1);
+		return (-2);
 	if (i > INT_MAX)
 	{
 		errno = EOVERFLOW;
@@ -123,10 +149,9 @@ ssize_t			iofmt_fmtsu(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 	return (f->width > f->prec ? f->width : f->prec);
 }
 
-static ssize_t	fmtxp(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+static ssize_t	fmtxp(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
 	if (f->xp && f->prec < 0)
 	{
 		errno = EOVERFLOW;
@@ -139,20 +164,16 @@ static ssize_t	fmtxp(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 		f->beg = f->end;
 		return (0);
 	}
-	if (((f->type != 'o' && f->type != 'O') || !(f->flags & ALT_FORM)) &&
-		f->end - f->beg + !arg.i)
-		f->prec = (int32_t)(f->end - f->beg + !arg.i);
+	if (f->end - f->beg + !arg.i)
+		f->prec = MAX(f->prec, (int32_t)(f->end - f->beg + !arg.i));
 	return (0);
 }
 
-ssize_t			iofmt_fmtp(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtp(t_stream *s, t_fmt *f, t_varg arg)
 {
 	uintmax_t	x;
 	char		*z;
 
-	(void)buf;
-	if (2 * sizeof(void*) > (size_t)f->prec)
-		f->prec = sizeof(void *);
 	x = arg.i;
 	z = f->end;
 	while (x)
@@ -161,18 +182,17 @@ ssize_t			iofmt_fmtp(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 		x >>= 4;
 	}
 	f->beg = z;
-	f->prefix += ('x' >> 4);
-	f->precl = 2;
-	return (fmtxp(s, f, arg, buf));
+	f->pref += ('x' >> 4);
+	f->prefl = 2;
+	return (fmtxp(s, f, arg));
 }
 
-ssize_t			iofmt_fmtx(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtx(t_stream *s, t_fmt *f, t_varg arg)
 {
 	uintmax_t	x;
 	char		*z;
 
 	(void)s;
-	(void)buf;
 	x = arg.i;
 	z = f->end;
 	while (x)
@@ -183,19 +203,18 @@ ssize_t			iofmt_fmtx(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 	f->beg = z;
 	if ((f->flags & ALT_FORM) && arg.i)
 	{
-		f->prefix += (f->type >> 4);
-		f->precl = 2;
+		f->pref += (f->type >> 4);
+		f->prefl = 2;
 	}
-	return (fmtxp(s, f, arg, buf));
+	return (fmtxp(s, f, arg));
 }
 
-ssize_t			iofmt_fmto(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmto(t_stream *s, t_fmt *f, t_varg arg)
 {
 	uintmax_t	x;
 	char		*z;
 
 	(void)s;
-	(void)buf;
 	x = arg.i;
 	z = f->end;
 	while (x)
@@ -206,33 +225,31 @@ ssize_t			iofmt_fmto(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 	f->beg = z;
 	if ((f->flags & ALT_FORM) && f->prec < f->end - f->beg + 1)
 		f->prec = (int32_t)(f->end - f->beg + 1);
-	return (fmtxp(s, f, arg, buf));
+	return (fmtxp(s, f, arg));
 }
 
-ssize_t			iofmt_fmtdi(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t			iofmt_fmtdi(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
-	f->precl = 1;
+	f->prefl = 1;
 	if (arg.i > INTMAX_MAX)
 		arg.i = (uintmax_t)-arg.i;
 	else if ((f->flags & MARK_POS))
-		++f->prefix;
+		++f->pref;
 	else if ((f->flags & PAD_POS))
-		f->prefix += 2;
+		f->pref += 2;
 	else
-		f->precl = 0;
-	return (iofmt_fmtu(s, f, arg, buf));
+		f->prefl = 0;
+	return (iofmt_fmtu(s, f, arg));
 }
 
-ssize_t	iofmt_fmtu(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t	iofmt_fmtu(t_stream *s, t_fmt *f, t_varg arg)
 {
 	uintmax_t		x;
 	char			*z;
 	unsigned long	y;
 
 	(void)s;
-	(void)buf;
 	x = arg.i;
 	z = f->end;
 	while (x > ULONG_MAX)
@@ -247,28 +264,26 @@ ssize_t	iofmt_fmtu(t_stream *s, t_fmt *f, t_varg arg, char *buf)
 		y /= 10;
 	}
 	f->beg = z;
-	return (fmtxp(s, f, arg, buf));
+	return (fmtxp(s, f, arg));
 }
 
-ssize_t	iofmt_fmtc(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t	iofmt_fmtc(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
 	f->prec = 1;
 	f->beg = f->end - f->prec;
 	*f->beg = (char)arg.i;
 	return (0);
 }
 
-ssize_t	iofmt_fmtcu(t_stream *s, t_fmt *f, t_varg arg, char *buf)
+ssize_t	iofmt_fmtcu(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	(void)buf;
 	f->wc[0] = (wchar_t)arg.i;
 	f->wc[1] = 0;
 	arg.p = f->wc;
 	if (!*((wchar_t	*)arg.p))
 		return (1);
 	f->prec = -1;
-	return (iofmt_fmtsu(s, f, arg, buf));
+	return (iofmt_fmtsu(s, f, arg));
 }

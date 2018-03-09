@@ -37,6 +37,8 @@ inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 	bzero(f, sizeof(t_fmt));
 	while (**sp && (**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
 		f->flags |= 1U << (*(*sp)++ - ' ');
+	if ((f->width = atoio(sp)) < 0)
+		return (-1);
 	if (**sp == '*')
 	{
 		if ((f->width = (int16_t)va_arg(ap, int)) < 0)
@@ -45,9 +47,9 @@ inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 			f->width = -f->width;
 		}
 		++*sp;
+		if (isdigit(**sp) && (f->width = atoio(sp)) < 0)
+			return (-1);
 	}
-	else if ((f->width = atoio(sp)) < 0)
-		return (-1);
 	if (**sp == '.')
 	{
 		if (*(*sp + 1) == '*')
