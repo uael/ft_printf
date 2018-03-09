@@ -22,7 +22,6 @@ static t_stream	g_f = {
 	.flags = FT_FPERM | FT_FNORD,
 	.lbf = -1,
 	.write = stdiowrite,
-	.close = stdioclose,
 	.lock = -1,
 };
 t_stream		*g_stderr = &g_f;

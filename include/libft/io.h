@@ -20,7 +20,6 @@
 struct s_stream;
 
 typedef size_t	(t_write)(struct s_stream *, const uint8_t *, size_t);
-typedef int		(t_close)(struct s_stream *);
 
 typedef struct	s_stream
 {
@@ -31,7 +30,6 @@ typedef struct	s_stream
 	int8_t		lock;
 	void		*cookie;
 	t_write		*write;
-	t_close		*close;
 	size_t		buf_size;
 	uint8_t		*buf;
 	uint8_t		*rpos;

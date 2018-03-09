@@ -19,7 +19,11 @@
 
 int	main(void)
 {
-	//setlocale(LC_ALL, "");
-	printf("%d\n", ft_printf("%S", L"米"));
+	setlocale(LC_ALL, "");
+	printf("%d\n", ft_printf("%s", ""
+		"lkdsfjgkl;jsdfgkljskldfjglksdfgkjsldfkjglksdfjgkjlsdfkjgklsjdklfgjksldfg"
+		"dsfkljgklsdjfgksdfjglkjsdklfgjklsdfjlgkjsdflkjglksdfjglkjslkdfjglksdjfgklj"
+		"sdfklgjklsdfgjlksdfjgkljsdlkfgjlksdfjklgjkdflsjglkjfsdklgjlkfsdjgkljsdfklgj"
+		"dklsfjgklsdjfglkjsdklfgjlksdfjglkjsdflkgjklsdfjgkljdfsklgjlksdfjgklsdfg"));
 	return (0);
 }

@@ -24,6 +24,5 @@
 
 size_t	fwritex(t_stream *f, uint8_t const *s, size_t l);
 size_t	stdiowrite(t_stream *f, uint8_t const *s, size_t len);
-int		stdioclose(t_stream *f);
 
 #endif

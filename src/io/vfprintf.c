@@ -12,13 +12,10 @@
 
 #include "fmt.h"
 
-#include <ctype.h>
 #include <errno.h>
-#include <float.h>
-#include <inttypes.h>
 #include <limits.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 inline size_t		iofmt_out(t_stream *f, const char *s, size_t l)
 {
@@ -89,8 +86,8 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 		ret += len;
 		fmt = pct;
 	}
-	len = ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX
-		? doerr(EOVERFLOW) : (int)ret);
+	if ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX)
+		return (doerr(EOVERFLOW));
 	ft_fflush(f);
-	return (len);
+	return ((int)ret);
 }
