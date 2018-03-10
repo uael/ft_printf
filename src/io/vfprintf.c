@@ -71,15 +71,19 @@ static void			flushatexit(void)
 	ft_fflush(g_stderr);
 }
 
-static void			flushinit(void)
+static void			flushinit(t_stream *s)
 {
-	static int	init = 0;
+	static int		init = 0;
+	static t_stream	*last = NULL;
 
 	if (!init)
 	{
 		atexit(flushatexit);
 		init = 1;
 	}
+	if (last && last != s)
+		ft_fflush(last);
+	last = s;
 }
 
 inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
@@ -105,7 +109,6 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	}
 	if ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX)
 		return (doerr(EOVERFLOW));
-	flushinit();
-	ft_fflush(f);
+	flushinit(f);
 	return ((int)ret);
 }
