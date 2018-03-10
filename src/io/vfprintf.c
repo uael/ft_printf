@@ -65,6 +65,23 @@ static inline int	printarg(t_stream *f, char **pct, va_list ap)
 	return (len);
 }
 
+static void			flushatexit(void)
+{
+	ft_fflush(g_stdout);
+	ft_fflush(g_stderr);
+}
+
+static void			flushinit(void)
+{
+	static int	init = 0;
+
+	if (!init)
+	{
+		atexit(flushatexit);
+		init = 1;
+	}
+}
+
 inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 {
 	int		len;
@@ -88,6 +105,7 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	}
 	if ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX)
 		return (doerr(EOVERFLOW));
+	flushinit();
 	ft_fflush(f);
 	return ((int)ret);
 }
