@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   io/asprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 09:52:30 by alucas-           #+#    #+#             */
-/*   Updated: 2017/11/23 17:28:28 by null             ###   ########.fr       */
+/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
+/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
+#include "libft/io.h"
 
-# include <stdarg.h>
-# include <sys/types.h>
+int	ft_asprintf(char **s, char const *fmt, ...)
+{
+	int		ret;
+	va_list	ap;
 
-ssize_t	ft_printf(char const *fmt, ...);
-ssize_t	ft_vprintf(char const *fmt, va_list ap);
-ssize_t	ft_dprintf(int fd, char const *fmt, ...);
-ssize_t	ft_vdprintf(int fd, char const *fmt, va_list ap);
-ssize_t	ft_asprintf(char **out, char const *fmt, ...);
-ssize_t	ft_vasprintf(char **out, char const *fmt, va_list ap);
-
-#endif
+	va_start(ap, fmt);
+	ret = ft_vasprintf(s, fmt, ap);
+	va_end(ap);
+	return (ret);
+}

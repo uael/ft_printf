@@ -1,11 +1,5 @@
 .idea/
-cmake-build-debug/
+cmake-build-*/
 out/
 obj/
-21sh
-21sh.exe
-21sh.dev
-21sh.dev.exe
-21sh.san
-21sh.san.exe
 *.a
