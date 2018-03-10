@@ -65,12 +65,6 @@ static inline int	printarg(t_stream *f, char **pct, va_list ap)
 	return (len);
 }
 
-static void			flushatexit(void)
-{
-	ft_fflush(g_stdout);
-	ft_fflush(g_stderr);
-}
-
 static void			flushinit(t_stream *s)
 {
 	static int		init = 0;
@@ -78,7 +72,7 @@ static void			flushinit(t_stream *s)
 
 	if (!init)
 	{
-		atexit(flushatexit);
+		atexit(ft_fflushstd);
 		init = 1;
 	}
 	if (last && last != s)

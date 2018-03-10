@@ -44,6 +44,7 @@ extern t_stream	*g_stderr;
 
 extern size_t	ft_fwrite(t_stream *f, void const *src, size_t n, size_t isz);
 extern int		ft_fflush(t_stream *f);
+extern void		ft_fflushstd(void);
 
 extern int		ft_asprintf(char **s, char const *fmt, ...);
 extern int		ft_dprintf(int fd, char const *fmt, ...);

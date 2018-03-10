@@ -41,7 +41,8 @@ SRC_NAME = \
   io/fmt/eval.c io/fmt/fmt_01.c io/fmt/parse.c io/fmt/type.c \
   io/asprintf.c io/dprintf.c io/fprintf.c io/fwrite.c io/printf.c \
   io/snprintf.c io/sprintf.c io/stderr.c io/stdio.c io/stdout.c io/vasprintf.c \
-  io/vdprintf.c io/vfprintf.c io/vprintf.c io/vsnprintf.c io/vsprintf.c
+  io/vdprintf.c io/vfprintf.c io/vprintf.c io/vsnprintf.c io/vsprintf.c \
+  io/fflush.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
