@@ -54,23 +54,23 @@ inline int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s)
 	f.type = t;
 	f.pref = "-+   0X0x";
 	f.end = buf + sizeof(buf);
-	(f.flags & LEFT_ADJ) ? (f.flags &= ~ZERO_PAD) : 0;
+	(f.fl & LEFT_ADJ) ? (f.fl &= ~ZERO_PAD) : 0;
 	if ((r = evalt(s, &f, a)) || f.done)
 		return ((int)r);
-	if (f.prec < f.end - f.beg)
-		f.prec = (int32_t)(f.end - f.beg);
-	if (f.prec > INT_MAX - f.prefl)
+	if (f.p < f.end - f.beg)
+		f.p = (int32_t)(f.end - f.beg);
+	if (f.p > INT_MAX - f.pl)
 	{
 		errno = EOVERFLOW;
 		return (-1);
 	}
-	if (f.width < f.prefl + f.prec)
-		f.width = (int16_t)(f.prefl + f.prec);
-	iofmt_pad(s, ' ', f.width, (size_t)(f.prefl + f.prec), f.flags);
-	iofmt_out(s, f.pref, (size_t)f.prefl);
-	iofmt_pad(s, '0', f.width, (size_t)(f.prefl + f.prec), f.flags ^ ZERO_PAD);
-	iofmt_pad(s, '0', f.prec, f.end - f.beg, 0);
+	if (f.w < f.pl + f.p)
+		f.w = (int16_t)(f.pl + f.p);
+	iofmt_pad(s, (t_pad){' ', f.w, (size_t)(f.pl + f.p), f.fl});
+	iofmt_out(s, f.pref, (size_t)f.pl);
+	iofmt_pad(s, (t_pad){'0', f.w, (size_t)(f.pl + f.p), f.fl ^ ZERO_PAD});
+	iofmt_pad(s, (t_pad){'0', f.p, f.end - f.beg, 0});
 	iofmt_out(s, f.beg, f.end - f.beg);
-	iofmt_pad(s, ' ', f.width, (size_t)(f.prefl + f.prec), f.flags ^ LEFT_ADJ);
-	return (f.width);
+	iofmt_pad(s, (t_pad){' ', f.w, (size_t)(f.pl + f.p), f.fl ^ LEFT_ADJ});
+	return (f.w);
 }

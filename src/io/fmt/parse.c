@@ -35,36 +35,36 @@ inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 {
 	ft_bzero(f, sizeof(t_fmt));
 	while (**sp && (**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
-		f->flags |= 1U << (*(*sp)++ - ' ');
-	if ((f->width = atoio(sp)) < 0)
+		f->fl |= 1U << (*(*sp)++ - ' ');
+	if ((f->w = atoio(sp)) < 0)
 		return (-1);
 	if (**sp == '*')
 	{
-		if ((f->width = (int16_t)va_arg(ap, int)) < 0)
+		if ((f->w = (int16_t)va_arg(ap, int)) < 0)
 		{
-			f->flags |= LEFT_ADJ;
-			f->width = -f->width;
+			f->fl |= LEFT_ADJ;
+			f->w = -f->w;
 		}
 		++*sp;
-		if (ft_isdigit(**sp) && (f->width = atoio(sp)) < 0)
+		if (ft_isdigit(**sp) && (f->w = atoio(sp)) < 0)
 			return (-1);
 	}
 	if (**sp == '.')
 	{
 		if (*(*sp + 1) == '*')
 		{
-			f->prec = va_arg(ap, int);
+			f->p = va_arg(ap, int);
 			*sp += 2;
-			f->xp = f->prec >= 0;
+			f->xp = f->p >= 0;
 		}
 		else
 		{
 			++*sp;
-			f->prec = atoio(sp);
+			f->p = atoio(sp);
 			f->xp = 1;
 		}
 	}
 	else
-		f->prec = -1;
+		f->p = -1;
 	return (0);
 }

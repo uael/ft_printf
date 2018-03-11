@@ -24,20 +24,20 @@ inline size_t		iofmt_out(t_stream *f, const char *s, size_t l)
 	return (l);
 }
 
-inline void			iofmt_pad(t_stream *f, char c, int w, size_t l, int fl)
+inline void			iofmt_pad(t_stream *f, t_pad p)
 {
 	char pad[256];
 
-	if ((fl & (LEFT_ADJ | ZERO_PAD)) || l >= (size_t)w)
+	if ((p.flags & (LEFT_ADJ | ZERO_PAD)) || p.len >= (size_t)p.width)
 		return ;
-	l = w - l;
-	ft_memset(pad, c, l > sizeof pad ? sizeof pad : l);
-	while (l >= sizeof pad)
+	p.len = p.width - p.len;
+	ft_memset(pad, p.c, p.len > sizeof pad ? sizeof pad : p.len);
+	while (p.len >= sizeof pad)
 	{
 		iofmt_out(f, pad, sizeof pad);
-		l -= sizeof pad;
+		p.len -= sizeof pad;
 	}
-	iofmt_out(f, pad, l);
+	iofmt_out(f, pad, p.len);
 }
 
 static inline int	doerr(int err)

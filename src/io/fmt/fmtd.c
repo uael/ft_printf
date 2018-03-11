@@ -32,7 +32,7 @@ ssize_t	iofmt_fmtp(t_stream *s, t_fmt *f, t_varg arg)
 	}
 	f->beg = z;
 	f->pref += ('x' >> 4);
-	f->prefl = 2;
+	f->pl = 2;
 	return (iofmt_fmtxp(s, f, arg));
 }
 
@@ -50,10 +50,10 @@ ssize_t	iofmt_fmtx(t_stream *s, t_fmt *f, t_varg arg)
 		x >>= 4;
 	}
 	f->beg = z;
-	if ((f->flags & ALT_FORM) && arg.i)
+	if ((f->fl & ALT_FORM) && arg.i)
 	{
 		f->pref += (f->type >> 4);
-		f->prefl = 2;
+		f->pl = 2;
 	}
 	return (iofmt_fmtxp(s, f, arg));
 }
@@ -72,23 +72,23 @@ ssize_t	iofmt_fmto(t_stream *s, t_fmt *f, t_varg arg)
 		x >>= 3;
 	}
 	f->beg = z;
-	if ((f->flags & ALT_FORM) && f->prec < f->end - f->beg + 1)
-		f->prec = (int32_t)(f->end - f->beg + 1);
+	if ((f->fl & ALT_FORM) && f->p < f->end - f->beg + 1)
+		f->p = (int32_t)(f->end - f->beg + 1);
 	return (iofmt_fmtxp(s, f, arg));
 }
 
 ssize_t	iofmt_fmtdi(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
-	f->prefl = 1;
+	f->pl = 1;
 	if (arg.i > INTMAX_MAX)
 		arg.i = (uintmax_t)-arg.i;
-	else if ((f->flags & MARK_POS))
+	else if ((f->fl & MARK_POS))
 		++f->pref;
-	else if ((f->flags & PAD_POS))
+	else if ((f->fl & PAD_POS))
 		f->pref += 2;
 	else
-		f->prefl = 0;
+		f->pl = 0;
 	return (iofmt_fmtu(s, f, arg));
 }
 

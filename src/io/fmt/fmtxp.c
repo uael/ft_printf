@@ -21,19 +21,19 @@ ssize_t	iofmt_fmtxp(t_stream *s, t_fmt *f, t_varg arg)
 	int prec;
 
 	(void)s;
-	if (f->xp && f->prec < 0)
+	if (f->xp && f->p < 0)
 	{
 		errno = EOVERFLOW;
 		return (-1);
 	}
 	if (f->xp)
-		f->flags &= ~ZERO_PAD;
-	if (!arg.i && !f->prec)
+		f->fl &= ~ZERO_PAD;
+	if (!arg.i && !f->p)
 	{
 		f->beg = f->end;
 		return (0);
 	}
-	if ((prec = (int)(f->end - f->beg + !arg.i)) && prec > f->prec)
-		f->prec = prec;
+	if ((prec = (int)(f->end - f->beg + !arg.i)) && prec > f->p)
+		f->p = prec;
 	return (0);
 }

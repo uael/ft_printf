@@ -20,16 +20,16 @@ ssize_t			iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg)
 {
 	(void)s;
 	(void)arg;
-	if (f->xp && !f->prec)
-		f->prec = -1;
+	if (f->xp && !f->p)
+		f->p = -1;
 	f->beg = "%";
 	f->end = f->beg + ft_strnlen(f->beg,
-		(size_t)(f->prec < 0 ? INT_MAX : f->prec));
-	if (f->prec < 0 && *f->end)
+		(size_t)(f->p < 0 ? INT_MAX : f->p));
+	if (f->p < 0 && *f->end)
 	{
 		errno = EOVERFLOW;
 		return (-1);
 	}
-	f->prec = (int32_t)(f->end - f->beg);
+	f->p = (int32_t)(f->end - f->beg);
 	return (0);
 }
