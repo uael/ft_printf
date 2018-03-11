@@ -14,6 +14,7 @@
 # define LIBFT_STR_H
 
 # include <stdint.h>
+# include <stdlib.h>
 # include <sys/types.h>
 
 # include "cty.h"
