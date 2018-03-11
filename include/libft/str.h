@@ -13,6 +13,7 @@
 #ifndef LIBFT_STR_H
 # define LIBFT_STR_H
 
+# include <stdint.h>
 # include <sys/types.h>
 
 # include "cty.h"
