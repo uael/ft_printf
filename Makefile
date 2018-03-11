@@ -56,82 +56,68 @@ DEP = $(OBJ:%.o=%.d)
 
 PRINTF=test $(VERBOSE)$(TRAVIS) || printf
 
-ifeq ($(OS), Windows_NT)
-  CCFLAGS += -D WIN32
-  ifeq ($(PROCESSOR_ARCHITECTURE), AMD64)
-    CCFLAGS += -D AMD64
-  else ifeq ($(PROCESSOR_ARCHITECTURE), x86)
-    CCFLAGS += -D IA32
-  endif
+ifneq (,$(findstring dev,$(PROJECT)))
+3DE = $(shell echo "$(3TH_NAME)" | sed -E "s|([\.a-zA-Z]+)|$(3TH_PATH)/\1/\1.dev.a|g")
+else ifneq (,$(findstring san,$(PROJECT)))
+3DE = $(shell echo "$(3TH_NAME)" | sed -E "s|([\.a-zA-Z]+)|$(3TH_PATH)/\1/\1.san.a|g")
 else
-  UNAME_S = $(shell uname -s)
-  ifeq ($(UNAME_S), Linux)
-    CCFLAGS += -D LINUX
-  else ifeq ($(UNAME_S), Darwin)
-    CCFLAGS += -D OSX
-  endif
-  UNAME_P = $(shell uname -p)
-  ifeq ($(UNAME_P), unknown)
-    UNAME_P = $(shell uname -m)
-  endif
-  ifeq ($(UNAME_P), x86_64)
-    CCFLAGS += -D AMD64
-  else ifneq ($(filter %86, $(UNAME_P)), )
-    CCFLAGS += -D IA32
-  else ifneq ($(filter arm%, $(UNAME_P)), )
-    CCFLAGS += -D ARM
-  endif
+3DE = $(shell echo "$(3TH_NAME)" | sed -E "s|([\.a-zA-Z]+)|$(3TH_PATH)/\1/\1.a|g")
 endif
 
 all:
 ifneq ($(3TH_NAME),)
 	+$(foreach 3th,$(3TH_NAME),$(MAKE) -C $(3TH_PATH)/$(3th) &&) true
 endif
-	+$(MAKE) $(PROJECT).a "CFLAGS = $(RCFLAGS)" "OBJ_PATH = $(OBJ_DIR)/rel"
+	@$(PRINTF) "%-20s" "$(PROJECT): exe"
+	+$(MAKE) -j4 $(PROJECT).a "CFLAGS = $(RCFLAGS)" "OBJ_PATH = $(OBJ_DIR)/rel"
+	@$(PRINTF) "\r\x1b[20C\x1b[0K\x1b[32m✔\x1b[0m\n"
 
 dev:
 ifneq ($(3TH_NAME),)
 	+$(foreach 3th,$(3TH_NAME),$(MAKE) -C $(3TH_PATH)/$(3th) dev &&) true
 endif
-	+$(MAKE) $(PROJECT).dev.a "PROJECT = $(PROJECT).dev" "CFLAGS = $(DCFLAGS)" \
+	@$(PRINTF) "%-20s" "$(PROJECT).dev: exe"
+	+$(MAKE) -j4 $(PROJECT).dev.a "PROJECT = $(PROJECT).dev" "CFLAGS = $(DCFLAGS)" \
 	  "OBJ_PATH = $(OBJ_DIR)/dev"
+	@$(PRINTF) "\r\x1b[20C\x1b[0K\x1b[32m✔\x1b[0m\n"
 
 san:
 ifneq ($(3TH_NAME),)
 	+$(foreach 3th,$(3TH_NAME),$(MAKE) -C $(3TH_PATH)/$(3th) san &&) true
 endif
-	+$(MAKE) $(PROJECT).san.a "PROJECT = $(PROJECT).san" "CFLAGS = $(SCFLAGS)" \
+	@$(PRINTF) "%-20s" "$(PROJECT).san: exe"
+	+$(MAKE) -j4 $(PROJECT).san.a "PROJECT = $(PROJECT).san" "CFLAGS = $(SCFLAGS)" \
 	  "OBJ_PATH = $(OBJ_DIR)/san" "CC = clang"
+	@$(PRINTF) "\r\x1b[20C\x1b[0K\x1b[32m✔\x1b[0m\n"
 
 mecry:
 ifneq ($(3TH_NAME),)
 	+$(foreach 3th,$(3TH_NAME),$(MAKE) -C $(3TH_PATH)/$(3th) mecry &&) true
 endif
-	+$(MAKE) $(PROJECT).a "CFLAGS = $(WWFLAGS)" "OBJ_PATH = $(OBJ_DIR)/rel"
+	@$(PRINTF) "%-20s" "$(PROJECT): make me cry.."
+	+$(MAKE) -j4 $(PROJECT).a "CFLAGS = $(WWFLAGS)" "OBJ_PATH = $(OBJ_DIR)/rel"
+	@$(PRINTF) "\r\x1b[20C\x1b[0K\x1b[32m✔\x1b[0m\n"
 
-$(PROJECT).a: $(OBJ)
+$(PROJECT).a: $(3DE) $(OBJ)
 	ar -rc $(PROJECT).a $(OBJ)
 	ranlib $(PROJECT).a
-	@$(PRINTF) "%-20s\033[32m✔\033[0m\n" "$(PROJECT): lib"
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	mkdir -p $(shell dirname $@)
-	@$(PRINTF) "\r%-20s$<\n" "$(PROJECT):"
-	$(CC) -O2 $(CCFLAGS) $(INC) -MMD -MP -c $< -o $@
-	@$(PRINTF) "\033[A\033[2K"
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c | $(OBJ_PATH)
+	@$(PRINTF) "\r\x1b[20C\x1b[0K$<"
+	$(CC) $(CFLAGS) $(INC) -MMD -MP -c $< -o $@
+
+$(OBJ_PATH):
+	mkdir -p $(dir $(OBJ))
 
 clean:
-	rm -f $(OBJ) $(DEP)
-	rm -f $(OBJ:$(OBJ_DIR)/rel%=$(OBJ_DIR)/dev%) $(DEP:$(OBJ_DIR)/rel%=$(OBJ_DIR)/dev%)
-	rm -f $(OBJ:$(OBJ_DIR)/rel%=$(OBJ_DIR)/san%) $(DEP:$(OBJ_DIR)/rel%=$(OBJ_DIR)/san%)
+	rm -rf $(OBJ_DIR)
 	@$(PRINTF) "%-20s\033[32m✔\033[0m\n" "$(PROJECT): $@"
 
 fclean: clean
 ifneq ($(3TH_NAME),)
 	+$(foreach 3th,$(3TH_NAME),$(MAKE) -C $(3TH_PATH)/$(3th) fclean &&) true
 endif
-	test -d $(OBJ_DIR) && find $(OBJ_DIR) -type d | sort -r | xargs rmdir || true
-	rm -f $(PROJECT){,.san,.dev}.a
+	rm -f $(PROJECT){,.san,.dev}
 	@$(PRINTF) "%-20s\033[32m✔\033[0m\n" "$(PROJECT): $@"
 
 re: clean all
