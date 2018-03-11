@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   io/fmt/fmt_01.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,12 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include <errno.h>
+#include <libft.h>
+#include <limits.h>
 
-# include "libft/cty.h"
-# include "libft/io.h"
-# include "libft/lib.h"
-# include "libft/str.h"
+#include "internal.h"
 
-#endif
+ssize_t			iofmt_fmtpct(t_stream *s, t_fmt *f, t_varg arg)
+{
+	(void)s;
+	(void)arg;
+	if (f->xp && !f->prec)
+		f->prec = -1;
+	f->beg = "%";
+	f->end = f->beg + ft_strnlen(f->beg,
+		(size_t)(f->prec < 0 ? INT_MAX : f->prec));
+	if (f->prec < 0 && *f->end)
+	{
+		errno = EOVERFLOW;
+		return (-1);
+	}
+	f->prec = (int32_t)(f->end - f->beg);
+	return (0);
+}

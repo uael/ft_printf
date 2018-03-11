@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   cty.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
-/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:52:33 by alucas-           #+#    #+#             */
+/*   Updated: 2017/12/11 11:10:49 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft/cty.h"
 
-# include "libft/cty.h"
-# include "libft/io.h"
-# include "libft/lib.h"
-# include "libft/str.h"
+inline int	ft_isalnum(int c)
+{
+	return (ft_isalpha(c) || ft_isdigit(c));
+}
 
-#endif
+inline int	ft_isalpha(int c)
+{
+	return (ft_isupper(c) || ft_islower(c));
+}
+
+inline int	ft_isascii(int c)
+{
+	return (c >= 0 && c < 128);
+}
+
+inline int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+inline int	ft_isprint(int c)
+{
+	return (c >= ' ' && c <= '~');
+}

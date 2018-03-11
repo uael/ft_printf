@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
 #include <limits.h>
-#include <string.h>
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -29,7 +29,7 @@ static size_t	snwrite(t_stream *f, uint8_t const *s, size_t len)
 		k = c->n;
 	if (k)
 	{
-		memcpy(c->s, f->wbase, k);
+		ft_memcpy(c->s, f->wbase, k);
 		c->s += k;
 		c->n -= k;
 	}
@@ -38,7 +38,7 @@ static size_t	snwrite(t_stream *f, uint8_t const *s, size_t len)
 		k = c->n;
 	if (k)
 	{
-		memcpy(c->s, s, k);
+		ft_memcpy(c->s, s, k);
 		c->s += k;
 		c->n -= k;
 	}

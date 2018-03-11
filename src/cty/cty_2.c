@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   cty_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
-/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:52:33 by alucas-           #+#    #+#             */
+/*   Updated: 2017/12/11 11:11:30 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft/cty.h"
 
-# include "libft/cty.h"
-# include "libft/io.h"
-# include "libft/lib.h"
-# include "libft/str.h"
+inline int	ft_islower(int c)
+{
+	return (c >= 'a' && c <= 'z');
+}
 
-#endif
+inline int	ft_isspace(int c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\r'));
+}
+
+inline int	ft_isupper(int c)
+{
+	return (c >= 'A' && c <= 'Z');
+}
+
+inline int	ft_tolower(int c)
+{
+	return (ft_isupper(c) ? c ^ 0x20 : c);
+}
+
+inline int	ft_toupper(int c)
+{
+	return (ft_islower(c) ? c ^ 0x20 : c);
+}

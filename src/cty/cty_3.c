@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   cty_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
-/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:52:33 by alucas-           #+#    #+#             */
+/*   Updated: 2017/12/11 11:11:30 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft/cty.h"
 
-# include "libft/cty.h"
-# include "libft/io.h"
-# include "libft/lib.h"
-# include "libft/str.h"
-
-#endif
+inline int	ft_iscntrl(int c)
+{
+	return (c < 32 || c == 127);
+}

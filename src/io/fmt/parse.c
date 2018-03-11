@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ctype.h>
+#include <libft.h>
 #include <limits.h>
-#include <string.h>
 
 #include "../fmt.h"
 
@@ -21,7 +20,7 @@ static inline int	atoio(char **s)
 	int i;
 
 	i = 0;
-	while (isdigit(**s))
+	while (ft_isdigit(**s))
 	{
 		if ((size_t)i > INT_MAX / 10U || (**s - '0') > INT_MAX - 10 * i)
 			i = -1;
@@ -34,7 +33,7 @@ static inline int	atoio(char **s)
 
 inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 {
-	bzero(f, sizeof(t_fmt));
+	ft_bzero(f, sizeof(t_fmt));
 	while (**sp && (**sp - ' ') < 32 && (FLAGMASK & (1U << (**sp - ' '))))
 		f->flags |= 1U << (*(*sp)++ - ' ');
 	if ((f->width = atoio(sp)) < 0)
@@ -47,7 +46,7 @@ inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 			f->width = -f->width;
 		}
 		++*sp;
-		if (isdigit(**sp) && (f->width = atoio(sp)) < 0)
+		if (ft_isdigit(**sp) && (f->width = atoio(sp)) < 0)
 			return (-1);
 	}
 	if (**sp == '.')

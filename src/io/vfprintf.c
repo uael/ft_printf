@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fmt.h"
-
 #include <errno.h>
+#include <libft.h>
 #include <limits.h>
-#include <string.h>
 #include <stdlib.h>
+
+#include "fmt.h"
 
 inline size_t		iofmt_out(t_stream *f, const char *s, size_t l)
 {
@@ -31,7 +31,7 @@ inline void			iofmt_pad(t_stream *f, char c, int w, size_t l, int fl)
 	if ((fl & (LEFT_ADJ | ZERO_PAD)) || l >= (size_t)w)
 		return ;
 	l = w - l;
-	memset(pad, c, l > sizeof pad ? sizeof pad : l);
+	ft_memset(pad, c, l > sizeof pad ? sizeof pad : l);
 	while (l >= sizeof pad)
 	{
 		iofmt_out(f, pad, sizeof pad);
@@ -87,7 +87,7 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	char	*pct;
 
 	ret = 0;
-	while ((pct = strchr(fmt, '%')))
+	while ((pct = ft_strchr(fmt, '%')))
 	{
 		if ((ret += iofmt_out(f, fmt, pct++ - fmt)) > INT_MAX)
 			return (doerr(EOVERFLOW));
@@ -101,7 +101,7 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 		ret += len;
 		fmt = pct;
 	}
-	if ((ret += iofmt_out(f, fmt, strlen(fmt))) > INT_MAX)
+	if ((ret += iofmt_out(f, fmt, ft_strlen(fmt))) > INT_MAX)
 		return (doerr(EOVERFLOW));
 	flushinit(f);
 	return ((int)ret);

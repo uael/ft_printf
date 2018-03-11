@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include <libft.h>
 #include <stdio.h>
 
 #include "internal.h"
@@ -55,7 +55,7 @@ size_t		fwritex(t_stream *f, uint8_t const *s, size_t l)
 			l -= i;
 		}
 	}
-	memcpy(f->wpos, s, l);
+	ft_memcpy(f->wpos, s, l);
 	f->wpos += l;
 	return (l + i);
 }
@@ -70,20 +70,4 @@ size_t		ft_fwrite(t_stream *f, void const *src, size_t size, size_t nmemb)
 		nmemb = 0;
 	k = fwritex(f, src, l);
 	return (k == l ? nmemb : k / size);
-}
-
-int			ft_fflush(t_stream *f)
-{
-	if (f->wpos > f->wbase)
-	{
-		f->write(f, 0, 0);
-		if (!f->wpos)
-			return (EOF);
-	}
-	f->wpos = 0;
-	f->wbase = 0;
-	f->wend = 0;
-	f->rpos = 0;
-	f->rend = 0;
-	return (0);
 }
