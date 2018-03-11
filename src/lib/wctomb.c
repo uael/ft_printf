@@ -13,7 +13,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#define IS_CODEUNIT(c) ((unsigned)(c)-0xdf80 < 0x80)
+#define IS_CODEUNIT(c) ((unsigned)(c) - 0xdf80 < 0x80)
 
 int	ft_wctomb(char *s, wchar_t wc)
 {

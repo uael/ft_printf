@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cty.c                                              :+:      :+:    :+:   */
+/*   str/memset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 09:52:33 by alucas-           #+#    #+#             */
-/*   Updated: 2017/12/11 11:10:49 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:44:14 by alucas-           #+#    #+#             */
+/*   Updated: 2017/11/08 14:29:11 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/cty.h"
+#include "libft/str.h"
 
-inline int	ft_isalnum(int c)
+inline void	*ft_memset(void *b, int c, size_t len)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
-}
+	void *r;
 
-inline int	ft_isalpha(int c)
-{
-	return (ft_isupper(c) || ft_islower(c));
-}
-
-inline int	ft_isascii(int c)
-{
-	return (c >= 0 && c < 128);
-}
-
-inline int	ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-inline int	ft_isprint(int c)
-{
-	return (c >= ' ' && c <= '~');
+	r = b;
+	while (len--)
+		*(uint8_t *)b++ = (uint8_t)c;
+	return (r);
 }

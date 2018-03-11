@@ -38,13 +38,14 @@ LIB_NAME = $(LIBS)
 endif
 3TH_NAME =
 SRC_NAME = \
-  io/fmt/eval.c io/fmt/fmt_01.c io/fmt/parse.c io/fmt/type.c \
-  io/asprintf.c io/dprintf.c io/fprintf.c io/fwrite.c io/printf.c \
-  io/snprintf.c io/sprintf.c io/stderr.c io/stdio.c io/stdout.c io/vasprintf.c \
-  io/vdprintf.c io/vfprintf.c io/vprintf.c io/vsnprintf.c io/vsprintf.c \
-  io/fflush.c \
-  str/mem.c str/mem_2.c str/str.c str/str_2.c str/str_3.c str/str_4.c \
-  str/str_5.c str/str_6.c \
+  cty/isdigit.c \
+  io/fmt/eval.c io/fmt/fmtd.c io/fmt/fmtm.c io/fmt/fmtpct.c io/fmt/fmts.c \
+  io/fmt/fmtxp.c io/fmt/parse.c io/fmt/type.c io/asprintf.c io/dprintf.c \
+  io/fprintf.c io/fwrite.c io/printf.c io/snprintf.c io/sprintf.c io/stderr.c \
+  io/stdio.c io/stdout.c io/vasprintf.c io/vdprintf.c io/vfprintf.c \
+  io/vprintf.c io/vsnprintf.c io/vsprintf.c io/fflush.c \
+  lib/wctomb.c \
+  str/bzero.c str/memcpy.c str/memset.c str/strchr.c str/strlen.c str/strnlen.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
