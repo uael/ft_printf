@@ -20,7 +20,7 @@ void	ft_fflushstd(void)
 	ft_fflush(g_stdout);
 }
 
-int	ft_fflush(t_stream *f)
+int		ft_fflush(t_stream *f)
 {
 	if (f->wpos > f->wbase)
 	{

@@ -44,7 +44,7 @@ SRC_NAME = \
   io/fprintf.c io/fwrite.c io/printf.c io/snprintf.c io/sprintf.c io/stderr.c \
   io/stdio.c io/stdout.c io/vasprintf.c io/vdprintf.c io/vfprintf.c \
   io/vprintf.c io/vsnprintf.c io/vsprintf.c io/fflush.c \
-  lib/wctomb.c \
+  lib/error.c lib/wctomb.c \
   str/bzero.c str/memcpy.c str/memset.c str/strchr.c str/strlen.c str/strnlen.c
 
 3TH = $(addprefix $(3TH_PATH)/, $(3TH_NAME))

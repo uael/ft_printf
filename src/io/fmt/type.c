@@ -12,82 +12,151 @@
 
 #include "internal.h"
 
-#define S(x) [(x)-'%']
-#define OOB(x) ((x)!='%'&&((unsigned)(x)-'A' > 'z'-'A'))
-
-static uint8_t const g_states[]['z'-'%'+1] = {
+static uint8_t const g_states[]['z' - '%' + 1] = {
 	{
-		S('%') = T_NOARG, S('d') = T_INT, S('i') = T_INT,
-		S('o') = T_UINT, S('u') = T_UINT, S('x') = T_UINT, S('X') = T_UINT,
-		S('e') = T_DBL, S('f') = T_DBL, S('g') = T_DBL, S('a') = T_DBL,
-		S('E') = T_DBL, S('F') = T_DBL, S('G') = T_DBL, S('A') = T_DBL,
-		S('c') = T_CHAR, S('C') = T_INT,
-		S('s') = T_PTR, S('S') = T_PTR, S('p') = T_UIPTR, S('n') = T_PTR,
-		S('m') = T_NOARG,
-		S('l') = T_LPRE, S('h') = T_HPRE, S('L') = T_BIGLPRE,
-		S('z') = T_ZTPRE, S('j') = T_JPRE, S('t') = T_ZTPRE,
-		S('D') = T_LONG, S('O') = T_ULONG, S('U') = T_ULONG,
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_INT,
+		['i' - '%'] = T_INT,
+		['o' - '%'] = T_UINT,
+		['u' - '%'] = T_UINT,
+		['x' - '%'] = T_UINT,
+		['X' - '%'] = T_UINT,
+		['e' - '%'] = T_DBL,
+		['f' - '%'] = T_DBL,
+		['g' - '%'] = T_DBL,
+		['a' - '%'] = T_DBL,
+		['E' - '%'] = T_DBL,
+		['F' - '%'] = T_DBL,
+		['G' - '%'] = T_DBL,
+		['A' - '%'] = T_DBL,
+		['c' - '%'] = T_CHAR,
+		['C' - '%'] = T_INT,
+		['s' - '%'] = T_PTR,
+		['S' - '%'] = T_PTR,
+		['p' - '%'] = T_UIPTR,
+		['n' - '%'] = T_PTR,
+		['m' - '%'] = T_NOARG,
+		['l' - '%'] = T_LPRE,
+		['h' - '%'] = T_HPRE,
+		['L' - '%'] = T_BIGLPRE,
+		['z' - '%'] = T_ZTPRE,
+		['j' - '%'] = T_JPRE,
+		['t' - '%'] = T_ZTPRE,
+		['D' - '%'] = T_LONG,
+		['O' - '%'] = T_ULONG,
+		['U' - '%'] = T_ULONG,
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_LONG, S('i') = T_LONG,
-		S('o') = T_ULONG, S('u') = T_ULONG, S('x') = T_ULONG, S('X') = T_ULONG,
-		S('e') = T_DBL, S('f') = T_DBL, S('g') = T_DBL, S('a') = T_DBL,
-		S('E') = T_DBL, S('F') = T_DBL, S('G') = T_DBL, S('A') = T_DBL,
-		S('c') = T_INT, S('s') = T_PTR, S('n') = T_PTR,
-		S('l') = T_LLPRE,
-		S('D') = T_LONG, S('O') = T_ULONG, S('U') = T_ULONG,
-		S('p') = T_UIPTR
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_LONG,
+		['i' - '%'] = T_LONG,
+		['o' - '%'] = T_ULONG,
+		['u' - '%'] = T_ULONG,
+		['x' - '%'] = T_ULONG,
+		['X' - '%'] = T_ULONG,
+		['e' - '%'] = T_DBL,
+		['f' - '%'] = T_DBL,
+		['g' - '%'] = T_DBL,
+		['a' - '%'] = T_DBL,
+		['E' - '%'] = T_DBL,
+		['F' - '%'] = T_DBL,
+		['G' - '%'] = T_DBL,
+		['A' - '%'] = T_DBL,
+		['c' - '%'] = T_INT,
+		['s' - '%'] = T_PTR,
+		['n' - '%'] = T_PTR,
+		['l' - '%'] = T_LLPRE,
+		['D' - '%'] = T_LONG,
+		['O' - '%'] = T_ULONG,
+		['U' - '%'] = T_ULONG,
+		['p' - '%'] = T_UIPTR
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_LLONG, S('i') = T_LLONG,
-		S('o') = T_ULLONG, S('u') = T_ULLONG,
-		S('x') = T_ULLONG, S('X') = T_ULLONG,
-		S('n') = T_PTR,
-		S('D') = T_LLONG, S('O') = T_ULLONG, S('U') = T_ULLONG,
-		S('p') = T_UIPTR
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_LLONG,
+		['i' - '%'] = T_LLONG,
+		['o' - '%'] = T_ULLONG,
+		['u' - '%'] = T_ULLONG,
+		['x' - '%'] = T_ULLONG,
+		['X' - '%'] = T_ULLONG,
+		['n' - '%'] = T_PTR,
+		['D' - '%'] = T_LLONG,
+		['O' - '%'] = T_ULLONG,
+		['U' - '%'] = T_ULLONG,
+		['p' - '%'] = T_UIPTR
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_SHORT, S('i') = T_SHORT,
-		S('o') = T_USHORT, S('u') = T_USHORT,
-		S('x') = T_USHORT, S('X') = T_USHORT,
-		S('n') = T_PTR,
-		S('h') = T_HHPRE,
-		S('D') = T_INT, S('O') = T_UINT, S('U') = T_UINT,
-		S('S') = T_PTR,
-		S('C') = T_INT
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_SHORT,
+		['i' - '%'] = T_SHORT,
+		['o' - '%'] = T_USHORT,
+		['u' - '%'] = T_USHORT,
+		['x' - '%'] = T_USHORT,
+		['X' - '%'] = T_USHORT,
+		['n' - '%'] = T_PTR,
+		['h' - '%'] = T_HHPRE,
+		['D' - '%'] = T_INT,
+		['O' - '%'] = T_UINT,
+		['U' - '%'] = T_UINT,
+		['S' - '%'] = T_PTR,
+		['C' - '%'] = T_INT
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_CHAR, S('i') = T_CHAR,
-		S('o') = T_UCHAR, S('u') = T_UCHAR,
-		S('x') = T_UCHAR, S('X') = T_UCHAR,
-		S('n') = T_PTR,
-		S('D') = T_USHORT, S('O') = T_USHORT, S('U') = T_USHORT,
-		S('S') = T_PTR,
-		S('C') = T_INT
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_CHAR,
+		['i' - '%'] = T_CHAR,
+		['o' - '%'] = T_UCHAR,
+		['u' - '%'] = T_UCHAR,
+		['x' - '%'] = T_UCHAR,
+		['X' - '%'] = T_UCHAR,
+		['n' - '%'] = T_PTR,
+		['D' - '%'] = T_USHORT,
+		['O' - '%'] = T_USHORT,
+		['U' - '%'] = T_USHORT,
+		['S' - '%'] = T_PTR,
+		['C' - '%'] = T_INT
 	},
 	{
-		S('%') = T_NOARG, S('e') = T_LDBL, S('f') = T_LDBL, S('g') = T_LDBL,
-		S('a') = T_LDBL,
-		S('E') = T_LDBL, S('F') = T_LDBL, S('G') = T_LDBL, S('A') = T_LDBL,
-		S('n') = T_PTR,
+		['%' - '%'] = T_NOARG,
+		['e' - '%'] = T_LDBL,
+		['f' - '%'] = T_LDBL,
+		['g' - '%'] = T_LDBL,
+		['a' - '%'] = T_LDBL,
+		['E' - '%'] = T_LDBL,
+		['F' - '%'] = T_LDBL,
+		['G' - '%'] = T_LDBL,
+		['A' - '%'] = T_LDBL,
+		['n' - '%'] = T_PTR,
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_PDIFF, S('i') = T_PDIFF,
-		S('o') = T_SIZET, S('u') = T_SIZET,
-		S('x') = T_SIZET, S('X') = T_SIZET,
-		S('D') = T_PDIFF, S('O') = T_SIZET, S('U') = T_SIZET,
-		S('n') = T_PTR,
-		S('S') = T_PTR,
-		S('C') = T_PDIFF
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_PDIFF,
+		['i' - '%'] = T_PDIFF,
+		['o' - '%'] = T_SIZET,
+		['u' - '%'] = T_SIZET,
+		['x' - '%'] = T_SIZET,
+		['X' - '%'] = T_SIZET,
+		['D' - '%'] = T_PDIFF,
+		['O' - '%'] = T_SIZET,
+		['U' - '%'] = T_SIZET,
+		['n' - '%'] = T_PTR,
+		['S' - '%'] = T_PTR,
+		['C' - '%'] = T_PDIFF
 	},
 	{
-		S('%') = T_NOARG, S('d') = T_IMAX, S('i') = T_IMAX,
-		S('o') = T_UMAX, S('u') = T_UMAX,
-		S('x') = T_UMAX, S('X') = T_UMAX,
-		S('D') = T_IMAX, S('O') = T_UMAX, S('U') = T_UMAX,
-		S('n') = T_PTR,
-		S('S') = T_PTR,
-		S('C') = T_IMAX
+		['%' - '%'] = T_NOARG,
+		['d' - '%'] = T_IMAX,
+		['i' - '%'] = T_IMAX,
+		['o' - '%'] = T_UMAX,
+		['u' - '%'] = T_UMAX,
+		['x' - '%'] = T_UMAX,
+		['X' - '%'] = T_UMAX,
+		['D' - '%'] = T_IMAX,
+		['O' - '%'] = T_UMAX,
+		['U' - '%'] = T_UMAX,
+		['n' - '%'] = T_PTR,
+		['S' - '%'] = T_PTR,
+		['C' - '%'] = T_IMAX
 	}
 };
 
@@ -143,25 +212,25 @@ inline int			iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap)
 	uint32_t	ps;
 
 	st = 0;
-	if (OOB(**s))
+	if (**s != '%' && ((unsigned)**s - 'A' > 'z' - 'A'))
 		return (-1);
 	ps = st;
-	if (!(st = g_states[st]S(**s)))
+	if (!(st = g_states[st][**s - '%']))
 		return (-1);
 	++*s;
 	while (st - 1 < T_STOP)
 	{
-		if (OOB(**s))
+		if (**s != '%' && ((unsigned)**s - 'A' > 'z' - 'A'))
 			return (-1);
 		ps = st;
-		if (!(st = g_states[st]S(**s)))
+		if (!(st = g_states[st][**s - '%']))
 			return (-1);
 		++*s;
 	}
 	if (st != T_NOARG)
 		poparg(arg, st, ap);
-	*type = (*s)[-1];
+	*type = *s[-1];
 	if (ps && (*type & 15) == 3)
-		*type &=~ 32;
+		*type &= ~32;
 	return (st);
 }

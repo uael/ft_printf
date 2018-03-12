@@ -14,7 +14,7 @@
 
 #include "libft/io.h"
 
-int ft_vsprintf(char *s, char const *fmt, va_list ap)
+int	ft_vsprintf(char *s, char const *fmt, va_list ap)
 {
 	return (ft_vsnprintf(s, INT_MAX, fmt, ap));
 }

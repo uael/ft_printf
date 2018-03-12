@@ -15,6 +15,7 @@
 
 # include <wchar.h>
 
+extern int	ft_error(int rno, int eno);
 extern int	ft_wctomb(char *s, wchar_t wc);
 
 #endif

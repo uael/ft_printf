@@ -31,6 +31,27 @@ static inline int	atoio(char **s)
 	return (i);
 }
 
+static inline void	parsep(t_fmt *f, char **sp, va_list ap)
+{
+	if (**sp == '.')
+	{
+		if (*(*sp + 1) == '*')
+		{
+			f->p = va_arg(ap, int);
+			*sp += 2;
+			f->xp = f->p >= 0;
+		}
+		else
+		{
+			++*sp;
+			f->p = atoio(sp);
+			f->xp = 1;
+		}
+	}
+	else
+		f->p = -1;
+}
+
 inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 {
 	ft_bzero(f, sizeof(t_fmt));
@@ -49,22 +70,6 @@ inline int			iofmt_parse(t_fmt *f, char **sp, va_list ap)
 		if (ft_isdigit(**sp) && (f->w = atoio(sp)) < 0)
 			return (-1);
 	}
-	if (**sp == '.')
-	{
-		if (*(*sp + 1) == '*')
-		{
-			f->p = va_arg(ap, int);
-			*sp += 2;
-			f->xp = f->p >= 0;
-		}
-		else
-		{
-			++*sp;
-			f->p = atoio(sp);
-			f->xp = 1;
-		}
-	}
-	else
-		f->p = -1;
+	parsep(f, sp, ap);
 	return (0);
 }

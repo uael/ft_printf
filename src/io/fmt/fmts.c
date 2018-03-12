@@ -24,10 +24,7 @@ ssize_t			iofmt_fmts(t_stream *s, t_fmt *f, t_varg arg)
 	f->end = f->beg + ft_strnlen(f->beg,
 		(size_t)(f->p < 0 ? INT_MAX : f->p));
 	if (f->p < 0 && *f->end)
-	{
-		errno = EOVERFLOW;
-		return (-1);
-	}
+		return (ft_error(-1, EOVERFLOW));
 	f->p = (int32_t)(f->end - f->beg);
 	return (0);
 }
@@ -72,10 +69,7 @@ ssize_t			iofmt_fmtsu(t_stream *s, t_fmt *f, t_varg arg)
 	if (l < 0)
 		return (-2);
 	if (i > INT_MAX)
-	{
-		errno = EOVERFLOW;
-		return (-1);
-	}
+		return (ft_error(-1, EOVERFLOW));
 	f->p = (int)i;
 	return (suout(s, f, arg));
 }

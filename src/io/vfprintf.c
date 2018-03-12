@@ -31,19 +31,13 @@ inline void			iofmt_pad(t_stream *f, t_pad p)
 	if ((p.flags & (LEFT_ADJ | ZERO_PAD)) || p.len >= (size_t)p.width)
 		return ;
 	p.len = p.width - p.len;
-	ft_memset(pad, p.c, p.len > sizeof pad ? sizeof pad : p.len);
-	while (p.len >= sizeof pad)
+	ft_memset(pad, p.c, p.len > sizeof(pad) ? sizeof(pad) : p.len);
+	while (p.len >= sizeof(pad))
 	{
-		iofmt_out(f, pad, sizeof pad);
-		p.len -= sizeof pad;
+		iofmt_out(f, pad, sizeof(pad));
+		p.len -= sizeof(pad);
 	}
 	iofmt_out(f, pad, p.len);
-}
-
-static inline int	doerr(int err)
-{
-	errno = err;
-	return (-1);
 }
 
 static inline int	printarg(t_stream *f, char **pct, va_list ap)
@@ -54,11 +48,11 @@ static inline int	printarg(t_stream *f, char **pct, va_list ap)
 	t_varg	arg;
 
 	if (iofmt_parse(&fm, pct, ap))
-		return (doerr(EOVERFLOW));
+		return (ft_error(-1, EOVERFLOW));
 	if (iofmt_poptype(&arg, &type, pct, ap) < 0)
 	{
 		type = 'c';
-		arg.i = (uintmax_t)*(*pct)++;
+		arg.i = (uintmax_t)(*(*pct)++);
 	}
 	if ((len = iofmt_eval(type, fm, arg, f)) < 0)
 		return (len == -2 ? -1 : 0);
@@ -90,19 +84,19 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	while ((pct = ft_strchr(fmt, '%')))
 	{
 		if ((ret += iofmt_out(f, fmt, pct++ - fmt)) > INT_MAX)
-			return (doerr(EOVERFLOW));
+			return (ft_error(-1, EOVERFLOW));
 		if (!*pct)
 		{
 			fmt = pct;
 			break ;
 		}
 		if ((len = printarg(f, &pct, ap)) < 0 || len + ret > INT_MAX)
-			return (doerr(EOVERFLOW));
+			return (ft_error(-1, EOVERFLOW));
 		ret += len;
 		fmt = pct;
 	}
 	if ((ret += iofmt_out(f, fmt, ft_strlen(fmt))) > INT_MAX)
-		return (doerr(EOVERFLOW));
+		return (ft_error(-1, EOVERFLOW));
 	flushinit(f);
 	return ((int)ret);
 }

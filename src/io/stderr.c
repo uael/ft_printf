@@ -25,4 +25,3 @@ static t_stream	g_f = {
 	.lock = -1,
 };
 t_stream		*g_stderr = &g_f;
-

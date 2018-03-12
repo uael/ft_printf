@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stdout.c                                           :+:      :+:    :+:   */
+/*   lib/error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/25 00:42:42 by alucas-           #+#    #+#             */
-/*   Updated: 2018/02/25 00:42:42 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:44:14 by alucas-           #+#    #+#             */
+/*   Updated: 2017/11/08 14:29:11 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <errno.h>
 
-#include "internal.h"
-
-static uint8_t	g_buf[FT_BUFSIZ];
-static t_stream	g_f = {
-	.buf = g_buf,
-	.buf_size = sizeof(g_buf),
-	.fd = STDOUT_FILENO,
-	.flags = FT_FPERM | FT_FNORD,
-	.lbf = -1,
-	.write = stdiowrite,
-	.lock = -1,
-};
-t_stream		*g_stdout = &g_f;
+int	ft_error(int rno, int eno)
+{
+	if (eno <= 0 || eno > EQFULL)
+	{
+		errno = EINVAL;
+		return (-1);
+	}
+	errno = eno;
+	return (rno);
+}

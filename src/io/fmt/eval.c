@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <limits.h>
-#include <string.h>
+#include <libft.h>
 #include <float.h>
 #include <errno.h>
 
@@ -42,8 +42,7 @@ static ssize_t	evalt(t_stream *s, t_fmt *f, t_varg arg)
 
 	if ((cb = g_fmts[f->type - '%']))
 		return (cb(s, f, arg));
-	errno = EINVAL;
-	return (-1);
+	return (ft_error(-1, EINVAL));
 }
 
 inline int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s)
@@ -60,10 +59,7 @@ inline int		iofmt_eval(int t, t_fmt f, t_varg a, t_stream *s)
 	if (f.p < f.end - f.beg)
 		f.p = (int32_t)(f.end - f.beg);
 	if (f.p > INT_MAX - f.pl)
-	{
-		errno = EOVERFLOW;
-		return (-1);
-	}
+		return (ft_error(-1, EOVERFLOW));
 	if (f.w < f.pl + f.p)
 		f.w = (int16_t)(f.pl + f.p);
 	iofmt_pad(s, (t_pad){' ', f.w, (size_t)(f.pl + f.p), f.fl});

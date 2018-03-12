@@ -22,10 +22,7 @@ ssize_t	iofmt_fmtxp(t_stream *s, t_fmt *f, t_varg arg)
 
 	(void)s;
 	if (f->xp && f->p < 0)
-	{
-		errno = EOVERFLOW;
-		return (-1);
-	}
+		return (ft_error(-1, EOVERFLOW));
 	if (f->xp)
 		f->fl &= ~ZERO_PAD;
 	if (!arg.i && !f->p)

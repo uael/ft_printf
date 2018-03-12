@@ -33,9 +33,7 @@ static size_t	snwrite(t_stream *f, uint8_t const *s, size_t len)
 		c->s += k;
 		c->n -= k;
 	}
-	k = len;
-	if (c->n < k)
-		k = c->n;
+	k = c->n < len ? c->n : len;
 	if (k)
 	{
 		ft_memcpy(c->s, s, k);
@@ -43,7 +41,8 @@ static size_t	snwrite(t_stream *f, uint8_t const *s, size_t len)
 		c->n -= k;
 	}
 	*c->s = 0;
-	f->wpos = f->wbase = f->buf;
+	f->wbase = f->buf;
+	f->wpos = f->buf;
 	return (len);
 }
 
