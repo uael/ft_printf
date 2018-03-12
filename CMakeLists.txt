@@ -47,21 +47,3 @@ else ()
     PRIVATE -Wno-missing-field-initializers -Wno-missing-braces
     PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
 endif ()
-
-add_executable(tests main.c)
-target_link_libraries(tests ftprintf)
-
-target_compile_definitions(tests
-  PRIVATE $<$<CONFIG:Debug>:DEBUG>$<$<CONFIG:Release>:NDEBUG>
-  PRIVATE API_COMPILE)
-if (MSVC)
-  target_compile_options(tests
-    PRIVATE /MT$<$<CONFIG:Debug>:d> /Oy /W3
-    PRIVATE /D_CRT_SECURE_NO_WARNINGS /Dinline=__inline
-    PRIVATE /O$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:x>)
-else ()
-  target_compile_options(tests
-    PRIVATE -fomit-frame-pointer -ansi
-    PRIVATE -Wno-missing-field-initializers -Wno-missing-braces
-    PRIVATE -O$<$<CONFIG:Debug>:0 -g3>$<$<CONFIG:Release>:3>)
-endif ()

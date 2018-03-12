@@ -9,6 +9,8 @@ RESET='\033[0m'
 PURPLE='\033[0;35m'
 YELLOW='\033[0;33m'
 
+CC=gcc
+
 TMP_EXEC=$(mktemp)
 TMP_ERR=$(mktemp)
 LIBFTPRINTF=$1

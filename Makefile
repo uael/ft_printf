@@ -60,7 +60,7 @@ fclean: clean
 re: fclean all
 
 test: all
-	@./test.sh $(NAME)
+	@./test.sh libftprintf
 
 -include $(DEP)
 
