@@ -51,6 +51,8 @@ static inline int	printarg(t_stream *f, char **pct, va_list ap)
 		return (ft_error(-1, EOVERFLOW));
 	if (iofmt_poptype(&arg, &type, pct, ap) < 0)
 	{
+		if (!**pct)
+			return (0);
 		type = 'c';
 		arg.i = (uintmax_t)(*(*pct)++);
 	}
@@ -98,5 +100,6 @@ inline int			ft_vfprintf(t_stream *f, char const *fmt, va_list ap)
 	if ((ret += iofmt_out(f, fmt, ft_strlen(fmt))) > INT_MAX)
 		return (ft_error(-1, EOVERFLOW));
 	flushinit(f);
+	ft_fflush(f);
 	return ((int)ret);
 }

@@ -97,7 +97,7 @@ static uint8_t const g_states[]['z' - '%' + 1] = {
 		['h' - '%'] = T_HHPRE,
 		['D' - '%'] = T_INT,
 		['O' - '%'] = T_UINT,
-		['U' - '%'] = T_UINT,
+		['U' - '%'] = T_ULONG,
 		['S' - '%'] = T_PTR,
 		['C' - '%'] = T_INT
 	},
@@ -112,7 +112,7 @@ static uint8_t const g_states[]['z' - '%' + 1] = {
 		['n' - '%'] = T_PTR,
 		['D' - '%'] = T_USHORT,
 		['O' - '%'] = T_USHORT,
-		['U' - '%'] = T_USHORT,
+		['U' - '%'] = T_ULONG,
 		['S' - '%'] = T_PTR,
 		['C' - '%'] = T_INT
 	},
@@ -229,7 +229,7 @@ inline int			iofmt_poptype(t_varg *arg, int *type, char **s, va_list ap)
 	}
 	if (st != T_NOARG)
 		poparg(arg, st, ap);
-	*type = *s[-1];
+	*type = (*s)[-1];
 	if (ps && (*type & 15) == 3)
 		*type &= ~32;
 	return (st);

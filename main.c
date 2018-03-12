@@ -20,10 +20,5 @@
 int	main(void)
 {
 	setlocale(LC_ALL, "");
-	printf("%d\n", ft_printf("%s", ""
-		"lkdsfjgkl;jsdfgkljskldfjglksdfgkjsldfkjglksdfjgkjlsdfkjgklsjdklfgjksldfg"
-		"dsfkljgklsdjfgksdfjglkjsdklfgjklsdfjlgkjsdflkjglksdfjglkjslkdfjglksdjfgklj"
-		"sdfklgjklsdfgjlksdfjgkljsdlkfgjlksdfjklgjkdflsjglkjfsdklgjlkfsdjgkljsdfklgj"
-		"dklsfjgklsdjfglkjsdklfgjlksdfjglkjsdflkgjklsdfjgkljdfsklgjlksdfjgklsdfg"));
-	return (0);
+	return (ft_printf("%ll#x", 9223372036854775807));
 }
