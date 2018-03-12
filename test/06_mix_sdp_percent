@@ -1,0 +1,1 @@
+simple_mix: "s: %s, p: %p, d:%d", "a string", &i, 42

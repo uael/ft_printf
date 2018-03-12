@@ -1,0 +1,6 @@
+simple_convertion1: "%s", "abc"
+simple_convertion2: "111%s333", "222"
+simple_convertion3: "%s333", "222"
+simple_convertion4: "111%s", "222"
+null_string: "{%s}", 0
+empty_string: "{%s}", ""

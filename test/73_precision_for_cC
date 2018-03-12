@@ -1,0 +1,6 @@
+cNullChar: "%.c", 0
+cNullChar_positivePrecision: "%.5c", 0
+cPositiveValue_positivePrecision: "%.5c", 42
+cUpperNullChar: "%.C", 0
+cUpperNullChar_positivePrecision: "%.5C", 0
+cUpperPositiveValue_positivePrecision: "%.5C", 42

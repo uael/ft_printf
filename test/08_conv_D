@@ -1,0 +1,4 @@
+simple: "%D", 42L
+long_max: "%D", LONG_MAX
+long_min: "%D", LONG_MIN
+with_strings: "Coucou les %D!", 42

@@ -1,0 +1,4 @@
+simple_string: "This is a simple test."
+simple_string_with_newline: "This is a simple test.\nSecond sentence.\n"
+empty_string: ""
+simple_newline: "\n"

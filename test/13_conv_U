@@ -1,0 +1,3 @@
+simple: "%U", 42
+ulong_max_half: "%U", ULONG_MAX / 2
+ulong_max: "%U", ULONG_MAX

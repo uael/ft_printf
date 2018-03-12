@@ -1,0 +1,5 @@
+simple: "%u", 42
+uint_with_strings: "before %u after", 42
+many_uints: "%u%u%u%u%u",1, 100, 999, 42, 999988888
+many_uints_with_strings: "a%ub%uc%ud",0, 55555, 100000
+uints_max: "%u", UINT_MAX

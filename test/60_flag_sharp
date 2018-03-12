@@ -1,0 +1,11 @@
+octal_simple: "%#o", 42
+octal_zero: "%#o", 0
+octal_max: "%#o", INT_MAX
+octalUppercase_max: "%#O", 1
+hex_simple: "%#x", 42
+hex_zero: "%#x", 0
+hex_max: "%#x", INT_MAX
+hex_uppercase_simple: "%#X", 42
+hex_uppercase_zero: "%#X", 0
+hex_uppercase_max: "%#X", INT_MAX
+hex_c_zero: "%#c", 0

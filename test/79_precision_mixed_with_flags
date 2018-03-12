@@ -1,0 +1,10 @@
+precision_o_sharp_zero: "%#.o, %#.0o", 0, 0
+precision_x_sharp_zero: "%#.x, %#.0x", 0, 0
+precision_p_zero: "%.p, %.0p", 0, 0
+char_precision_minwdith_and_flagZero: "{%05.c}", 0
+string_precision_minwdith_and_flagZero: "{%05.s}", 0
+percent_precision_minwdith_and_flagZero: "{%05.%}", 0
+nonValidConvSpec_precision_minwdith_and_flagZero: "{%05.Z}", 0
+hex_precision_and_flagSharp: "{%#.5x}", 1
+octal_precision_and_flagSharp: "%#.3o", 1
+wideString_precisionMinWidth_flagZero: "{%05.S}", L"42 c est cool"

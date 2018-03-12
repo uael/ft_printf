@@ -1,4 +1,0 @@
-simple: "This is a simple test."
-simple_with_nl: "This is a simple test.\\nSecond sentence.\\n"
-empty: ""
-nl: "\n"

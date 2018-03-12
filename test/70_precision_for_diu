@@ -1,0 +1,30 @@
+precision_d: "%.4d", 42
+precision_d_len_higher_prec: "%.4d", 424242
+precision_d_len_higher_prec_neg: "%.4d", -424242
+precision_d_higher_min_width: "%15.4d", 42
+precision_d_higher_min_width_len_between_width_prec: "%15.4d", 424242
+precision_d_higher_min_width_len_higher_width: "%8.4d", 424242424
+precision_d_higher_min_width_neg: "%15.4d", -42
+precision_d_higher_min_width_len_between_width_prec_neg: "%15.4d", -424242
+precision_d_higher_min_width_len_higher_width_neg: "%8.4d", -424242424
+precision_d_higher_precision: "%4.15d", 42
+precision_d_higher_precision_len_between_width_prec: "%4.15d", 424242
+precision_d_higher_precision_len_higher_prec: "%4.8d", 424242424
+precision_d_higher_precision_neg: "%4.15d", -42
+precision_d_higher_precision_len_between_width_prec_neg: "%4.15d", -424242
+precision_d_higher_precision_len_higher_prec_neg: "%4.8d", -424242424
+precision_d_zero_value: "%.d, %.0d", 0, 0
+precision_d_negative_value: "%.10d", -42
+precision_i: "%.4i", 42
+precision_i_higher_min_width: "%15.4i", 42
+precision_i_higher_precision: "%4.15i", 42
+precision_i_zero_value: "%.i, %.0i", 0, 0
+precision_u: "%.4u", 42
+precision_u_len_higher_prec: "%.4u", 424242
+precision_u_higher_min_width: "%15.4u", 42
+precision_u_higher_min_width_len_between_width_prec: "%15.4u", 424242
+precision_u_higher_min_width_len_higher_width: "%8.4u", 424242424
+precision_u_higher_precision: "%4.15u", 42
+precision_u_higher_precision_len_between_width_prec: "%4.15u", 424242
+precision_u_higher_precision_len_higher_prec: "%4.8u", 424242424
+precision_u_zero_value: "%.u, %.0u", 0, 0

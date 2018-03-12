@@ -1,0 +1,4 @@
+hhd: "%hhd - %hhd", SHRT_MAX - 42,  SHRT_MAX - 4200
+zi: "%zi", LLONG_MIN
+zd: "%zd", LLONG_MIN
+p_incompatible_flags: "% p|%+p", 42, 42

@@ -1,0 +1,12 @@
+hd_max: "%hd", SHRT_MAX
+hd_min: "%hd", SHRT_MIN
+hi_simple: "%hi%hi", 0, 42
+hi_max: "%hi", SHRT_MAX
+hi_min: "%hi", SHRT_MIN
+hu_max: "%hu, %hu", 0, USHRT_MAX
+ho_max: "%ho, %ho", 0, USHRT_MAX
+hx_max: "%hx, %hx", 0, USHRT_MAX
+hX_max: "%hX, %hX", 0, USHRT_MAX
+err_ho_up_max: "%hO, %hO", 0, USHRT_MAX
+err_hu_up_max: "%hU, %hU", 0, USHRT_MAX
+err_hd_up_max: "%hD, %hD", 0, USHRT_MAX

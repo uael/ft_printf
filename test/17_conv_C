@@ -1,0 +1,8 @@
+simple_char: "%C", 'c'
+two_chars: "%C%C", '4', '2'
+chinese: "%C", L'猫'
+greek: "%C", L'δ'
+korean: "%C", L'요'
+japanese: "%C", L'莨'
+arabic: "%C", L'ي'
+nullChar: "%C", 0

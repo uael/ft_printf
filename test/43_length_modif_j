@@ -1,0 +1,13 @@
+jd_simple: "%jd%jd", 0, 42
+jd_llong_max: "%jd", LLONG_MAX
+jd_llong_min: "%jd", LLONG_MIN
+ji_simple: "%ji%ji", 0, 42
+ji_llong_max: "%ji", LLONG_MAX
+ji_llong_min: "%ji", LLONG_MIN
+ju_unsign_long_long_max: "%ju, %ju", 0, ULLONG_MAX
+jo_unsign_long_long_max: "%jo, %jo", 0, ULLONG_MAX
+jx_unsign_long_long_max: "%jx, %jx", 0, ULLONG_MAX
+jX_unsign_long_long_max: "%jX, %jX", 0, ULLONG_MAX
+err_jo_up_max: "%jO, %jO", 0, USHRT_MAX
+err_ju_up_max: "%jU, %jU", 0, USHRT_MAX
+err_jd_up_max: "%jD, %jD", 0, USHRT_MAX

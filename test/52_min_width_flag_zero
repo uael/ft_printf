@@ -1,0 +1,11 @@
+simple: "{%010d}", 42
+negative_value: "{%010d}", -42
+min_width_smaller_than_input: "{%04d}", 10000
+min_width_larger_than_input: "{%030d}", 10000
+min_width_with_hexa: "{%030x}", 0xFFFF
+min_width_with_hexa_caps: "{%030X}", 0xFFFF
+char_posMinWidth_zeroFlag: "{%03c}", 0
+str_posMinWidth_zeroFlag: "{%05s}", "abc"
+wide_str_posMinWidth_zeroFlag: "{%030S}", L"我是一只猫。"
+pointer_posMinWidth_zeroFlag: "{%05p}", 0
+pointer_valueLargerThanMinWidth_zeroFlag: "{%05p}", &strlen

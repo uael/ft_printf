@@ -20,7 +20,7 @@ failed=0
 
 function pad {
   S="$1"
-  line='                                 '
+  line='                                                                                '
   printf "%s %s" "$S" "${line:${#S}}"
 }
 
@@ -39,7 +39,15 @@ function san_asnprintf {
 int main() {
 	char *ft_printf_out;
 	ssize_t ft_printf_return;
+	char *str;
+	int i;
+	unsigned long l;
+	char c;
 
+    (void)str;
+    (void)i;
+    (void)l;
+    (void)c;
     setlocale(LC_ALL, "");
 	ft_printf_return = ft_asprintf(&ft_printf_out, FORMAT);
 
@@ -69,7 +77,15 @@ int main() {
 	char *printf_out;
 	ssize_t ft_printf_return;
 	ssize_t printf_return;
+    char *str;
+	int i;
+	unsigned long l;
+	char c;
 
+    (void)str;
+    (void)i;
+    (void)l;
+    (void)c;
     setlocale(LC_ALL, "");
 	ft_printf_return = ft_asprintf(&ft_printf_out, FORMAT);
 	printf_return = asprintf(&printf_out, FORMAT);

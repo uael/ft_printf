@@ -1,0 +1,7 @@
+octal_neg: "%o, %ho, %hho", -42, -42, -42
+octal_long_max: "%o", LONG_MAX
+octal_up_long_min: "%O", LONG_MIN
+octal_space_plus: "% o|%+o", 42, 42
+octal_sharp_precision: "%#.o", 42
+x_incompatible_flags: "% x|%+x", 42, 42
+x_up_incompatible_flags: "% X|%+X", 42, 42

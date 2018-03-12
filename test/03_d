@@ -1,7 +1,0 @@
-positive: "%d", 42
-negative: "%d", -42
-before_after: "before %d after", 42
-many_digits: "%d%d%d%d%d", 1, -2, 3, -4, 5
-many_digits_width_strings: "a%db%dc%dd", 1, -2, 3
-int_max: "%d", INT_MAX
-int_min: "%d", INT_MIN

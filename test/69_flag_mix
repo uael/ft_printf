@@ -1,0 +1,9 @@
+positiveDigit_flagsSpacePlus_spaceFirst: "{% +d}", 42
+positiveDigit_flagsSpacePlus_plusFirst: "{%+ d}", 42
+mix_plus_zero: "{%+03d}", 0
+mix_space_zero: "{% 03d}", 0
+zeroFlag_minusMinWidth: "{%0-3d}", 0
+zeroFlag_plusFlag_minWidth: "{%+03d}", 12
+zeroFlag_plusFlag_largeMinWidth: "{%+03d}", 123456
+mix_zeroFlag_minWidth_precision: "{%03.2d}", 0
+octalUppercase_precision_sharpFlag_zeroValue: "%#.O", 0

@@ -1,0 +1,15 @@
+ld_simple: "%ld%ld", 0, 42
+ld_long_max: "%ld", LONG_MAX
+ld_long_min: "%ld", LONG_MIN
+li_simple: "%li%li", 0, 42
+li_long_max: "%li", LONG_MAX
+li_long_min: "%li", LONG_MIN
+lu_long_unsigned_max: "%lu, %lu", 0, ULONG_MAX
+lo_long_unsigned_max: "%lo, %lo", 0, ULONG_MAX
+lx_long_unsigned_max: "%lx, %lx", 0, ULONG_MAX
+lX_long_unsigned_max: "%lX, %lX", 0, ULONG_MAX
+lc_wchar: "%lc, %lc", L'暖', L'ح'
+ls_wchar: "%ls, %ls", L"暖炉", L"لحم خنزير"
+err_lo_up_max: "%lO, %lO", 0, USHRT_MAX
+err_lu_up_max: "%lU, %lU", 0, USHRT_MAX
+err_ld_up_max: "%lD, %lD", 0, USHRT_MAX

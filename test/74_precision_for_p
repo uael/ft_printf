@@ -1,0 +1,6 @@
+pNullPointer_zeroPrecision: "%.0p, %.p", 0, 0
+pNullPointer_3Precision: "%.5p", 0
+Pointer_Precision_width_len_between_width_prec: "%9.2p", 1234
+Pointer_Precision_width_len_higher_width: "%9.2p", 1234567
+Pointer_Precision_width_min_len_between_width_prec: "%2.9p", 1234
+Pointer_Precision_width_min_len_higher_prec: "%2.9p", 1234567

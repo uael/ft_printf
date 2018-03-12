@@ -1,0 +1,13 @@
+lld_simple: "%lld%lld", 0, 42
+lld_llong_max: "%lld", LLONG_MAX
+lld_llong_min: "%lld", LLONG_MIN
+lli_simple: "%lli%lli", 0, 42
+lli_llong_max: "%lli", LLONG_MAX
+lli_llong_min: "%lli", LLONG_MIN
+llu_unsign_long_long_max: "%llu, %llu", 0, ULLONG_MAX
+llo_unsign_long_long_max: "%llo, %llo", 0, ULLONG_MAX
+llx_unsign_long_long_max: "%llx, %llx", 0, ULLONG_MAX
+llX_unsign_long_long_max: "%llX, %llX", 0, ULLONG_MAX
+err_llo_up_max: "%llO, %llO", 0, USHRT_MAX
+err_llu_up_max: "%llU, %llU", 0, USHRT_MAX
+err_lld_up_max: "%llD, %llD", 0, USHRT_MAX

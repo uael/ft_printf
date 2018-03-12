@@ -1,0 +1,3 @@
+simple: "{%-10d}", 42
+min_width_smaller_than_input: "{%-4d}", 10000
+min_width_larger_than_input: "{%-30d}", 10000

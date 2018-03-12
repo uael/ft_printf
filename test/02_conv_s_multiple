@@ -1,0 +1,3 @@
+2_strings: "111%s333%s555", "222", "444"
+more_strings: "111%s333%s555%saaa%sccc","222", "444", "666", "bbb"
+only_string_conv: "%s%s%s%s%s","1", "2", "3", "4", "5"

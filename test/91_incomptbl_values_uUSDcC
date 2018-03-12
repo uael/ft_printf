@@ -1,0 +1,6 @@
+unsigned_neg: "%u", -42
+unsigned_max_plus_one: "%u", UINT_MAX + 1
+unsigned_long_max_plus_one: "%U", ULONG_MAX + 1
+big_char: "%c", 200
+u_incompatible_flags: "% u|%+u", 42, 42
+hhu: "%hhu / %hhu", SHRT_MAX - 42,  SHRT_MAX - 4200

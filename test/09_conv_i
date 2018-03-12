@@ -1,0 +1,5 @@
+digit: "%i", 42
+digit_negative: "%i", -42
+digit_with_strings: "before %i after", 42
+many_digits: "%i%i%i%i%i",1, -2, 3, -4, 5
+many_digits_width_strings: "a%ib%ic%id",1, -2, 3

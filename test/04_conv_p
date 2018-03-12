@@ -1,0 +1,5 @@
+int_pointer: "%p", &i
+unsigned_long_pointer: "%p", &l
+str_pointer: "%p", &str
+function_pointer: "%p", &strlen
+zero: "%p", 0

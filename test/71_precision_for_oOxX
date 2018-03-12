@@ -1,0 +1,31 @@
+precision_o: "%.4o", 42
+precision_o_len_higher_prec: "%.4o", 424242
+precision_o_higher_min_width: "%15.4o", 42
+precision_o_higher_min_width_len_between_width_prec: "%15.4o", 424242
+precision_o_higher_min_width_len_higher_width: "%8.4o", 424242424
+precision_o_higher_precision: "%4.15o", 42
+precision_o_higher_precision_len_between_width_prec: "%4.15o", 424242
+precision_o_higher_precision_len_higher_prec: "%4.8o", 424242424
+precision_o_zero_value: "%.o, %.0o", 0, 0
+precision_o_up: "%.4O", 42
+precision_o_up_higher_min_width: "%15.4O", 42
+precision_o_up_higher_precision: "%4.15O", 42
+precision_o_up_zero_value: "%.o, %.0O", 0, 0
+precision_x: "%.4x", 42
+precision_x_len_higher_prec: "%.4x", 424242
+precision_x_higher_min_width: "%15.4x", 42
+precision_x_higher_min_width_len_between_width_prec: "%15.4x", 424242
+precision_x_higher_min_width_len_higher_width: "%8.4x", 424242424
+precision_x_higher_precision: "%4.15x", 42
+precision_x_higher_precision_len_between_width_prec: "%4.15x", 42424242
+precision_x_higher_precision_len_higher_prec: "%4.8x", 424242424
+precision_x_zero_value: "%.x, %.0x", 0, 0
+precision_x_up: "%.4X", 42
+precision_x_up_len_higher_prec: "%.4X", 424242
+precision_x_up_higher_min_width: "%15.4X", 42
+precision_x_up_higher_min_width_len_between_width_prec: "%15.4X", 424242
+precision_x_up_higher_min_width_len_higher_width: "%8.4X", 424242424
+precision_x_up_higher_precision: "%4.15X", 42
+precision_x_up_higher_precision_len_between_width_prec: "%4.15X", 424242
+precision_x_up_higher_precision_len_higher_prec: "%4.8X", 424242424
+precision_x_up_zero_value: "%.X, %.0X", 0, 0

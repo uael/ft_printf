@@ -1,0 +1,4 @@
+simple: "%o", 42
+octal_with_strings: "before %o after", 42
+many_octals: "%o%o%o%o%o",1, 100, 999, 42, 999988888
+many_octals_with_strings: "a%ob%oc%od",0, 55555, 100000

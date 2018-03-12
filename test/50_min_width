@@ -1,0 +1,12 @@
+simple: "{%10d}", 42
+min_width_smaller_than_input: "{%4d}", 10000
+min_width_larger_than_input: "{%30d}", 10000
+min_width_negative_width: "{%10d}", -42
+min_width_c: "{%3c}", 0
+pZero_5MinWidth: "{%5p}", 0
+pZero_minus15MinWidth: "{%-15p}", 0
+pZero_minus13MinWidth: "{%-13p}", &strlen
+pZero_minus12MinWidth: "{%-12p}", &strlen
+invalidConvSpec_withMinWith: "{%10R}"
+wideString: "{%30S}", L"我是一只猫。"
+wideString_minusMinWidth: "{%-30S}", L"我是一只猫。"

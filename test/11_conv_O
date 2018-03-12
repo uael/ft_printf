@@ -1,0 +1,5 @@
+simple: "%O", 42
+long_octal_with_strings: "before %O after", 42
+many_long_octals: "%O%O%O%O%O",1, 100, 999, 42, 999988888
+many_long_octals_with_strings: "a%Ob%Oc%Od",0, 55555, 100000
+octal_long_max: "%O", LONG_MAX

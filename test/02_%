@@ -1,7 +1,0 @@
-alone: "%%"
-simple: "aa%%bb"
-many: "%%%%%%%%%%"
-many2: ".%%.%%.%%.%%.%%.%%.%%.%%."
-invalid: "{%}"
-invalid2: "{% %}"
-san_invalid: "%"

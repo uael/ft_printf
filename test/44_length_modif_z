@@ -1,0 +1,11 @@
+zd_simple: "%zd%zd", 0, 42
+zd_llong_max: "%zd", LLONG_MAX
+zi_simple: "%zi%zi", 0, 42
+zi_llong_max: "%zi", LLONG_MAX
+zu_unsign_long_long_max: "%zu, %zu", 0, ULLONG_MAX
+zo_unsign_long_long_max: "%zo, %zo", 0, ULLONG_MAX
+zx_unsign_long_long_max: "%zx, %zx", 0, ULLONG_MAX
+zX_unsign_long_long_max: "%zX, %zX", 0, ULLONG_MAX
+err_zo_up_max: "%zO, %zO", 0, USHRT_MAX
+err_zu_up_max: "%zU, %zU", 0, USHRT_MAX
+err_zd_up_max: "%zD, %zD", 0, USHRT_MAX

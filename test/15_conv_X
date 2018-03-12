@@ -1,0 +1,5 @@
+simple: "%X", 42
+hex_with_strings: "before %X after", 42
+many_hexs: "%X%X%X%X%X",1, 100, 999, 42, 999988888
+many_hexs_with_strings: "a%Xb%Xc%Xd",0, 55555, 100000
+uint_max: "%X, %X", 0, UINT_MAX

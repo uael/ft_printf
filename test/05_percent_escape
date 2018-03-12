@@ -1,0 +1,8 @@
+percent_alone: "%%"
+percent_simple: "aa%%bb"
+many_percent: "%%%%%%%%%%"
+more_percent: ".%%.%%.%%.%%.%%.%%.%%.%%."
+modulo_without_valid_specifier: "%"
+percentSpaceZoo: "% Zoooo"
+percentAlone: "{%}"
+multiplePercent: "{% %}"
